@@ -1,0 +1,19 @@
+{
+  "extensionName": {
+    "message": "Best Cookier",
+    "description": ""
+  },
+  "extensionDescription": {
+    "message": "一款颜值超高、操作便捷、功能丰富的高质量 Cookie 管理器。",
+    "description": ""
+  },
+  "confirm": {
+    "message": "确定",
+    "description": ""
+  },
+  "cancel": {
+    "message": "取消",
+    "description": ""
+  }
+
+}

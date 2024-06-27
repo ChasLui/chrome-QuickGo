@@ -1,0 +1,18 @@
+{
+  "extensionName": {
+    "message": "Best Cookier",
+    "description": ""
+  },
+  "extensionDescription": {
+    "message": "A high-quality cookie manager with stylish design, convenient operation, and rich features.",
+    "description": ""
+  },
+  "confirm": {
+    "message": "Confirm",
+    "description": ""
+  },
+  "cancel": {
+    "message": "Cancel",
+    "description": ""
+  }
+}

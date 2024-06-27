@@ -1,0 +1,47 @@
+{
+  "name": "quickgo",
+  "displayName": "QuickGo",
+  "version": "0.0.1",
+  "description": "A basic Plasmo extension.",
+  "author": "Dolov. <songyan_shi@163.com>",
+  "scripts": {
+    "dev": "plasmo dev",
+    "build": "plasmo build",
+    "package": "plasmo package"
+  },
+  "dependencies": {
+    "@plasmohq/storage": "^1.11.0",
+    "classnames": "^2.5.1",
+    "daisyui": "^4.12.8",
+    "plasmo": "0.88.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "4.1.1",
+    "@types/chrome": "0.0.258",
+    "@types/dom-view-transitions": "^1.0.4",
+    "@types/node": "20.11.5",
+    "@types/react": "18.2.48",
+    "@types/react-dom": "18.2.18",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "prettier": "3.2.4",
+    "tailwindcss": "^3.4.4",
+    "typescript": "5.3.3"
+  },
+  "manifest": {
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6bJQAZUHtzhy2vcSMQKYyR8DGTGFSL4tK9g1DW/6pEK/YfqFVh2gdBWzzwYwyXiO11GRIq8cyYKPiW0KG+GO2rIcL1yiVwUfICZAB9sIJ0cxBGMo/WSD4qj9M53Ni4RdG8nM8RlFw/R4psqp9ok9BfoCywABHPPGk8+uMw0w9bLF78YUhzFNz2JkDq4y5QCCdkLGiYZZKpw/kA1F7yKBWlaPaR/flHpWrHiXRM4Y+PAnvvXhueohd7lJbBUpo5IzY4GzrK1wTrNUkTsWzNRcTlmqRgsJOGYuhbmhgyw6xErVT9ntCdDeqmKkHla5LxBked2pDAqOTmrSDUwHs9LNqwIDAQAB",
+    "permissions": [
+      "sidePanel",
+      "contextMenus",
+      "tabs"
+    ],
+    "side_panel": {
+      "default_path": "tabs/Sidepanel.html"
+    },
+    "host_permissions": [
+      "https://*/*"
+    ]
+  }
+}

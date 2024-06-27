@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+	.ellipsis {
+		@apply overflow-ellipsis overflow-hidden whitespace-nowrap;
+	}
+
+	.h-center {
+		@apply flex items-center;
+	}
+
+	.x-center {
+		@apply flex justify-center;
+	}
+
+	.center {
+		@apply flex justify-center items-center;
+	}
+
+	.no-scrollbar::-webkit-scrollbar {
+		@apply hidden;
+	}
+}
