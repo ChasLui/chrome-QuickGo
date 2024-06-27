@@ -13,7 +13,23 @@ export interface SidepanelProps {}
 
 // https://link.zhihu.com/?target=https%3A//www.python.org/
 
-const defaultData = []
+const defaultData = [
+  {
+    hostname: "link.zhihu.com",
+    redirectKey: "target",
+    disable: false
+  },
+  {
+    hostname: "link.juejin.cn",
+    redirectKey: "target",
+    disable: false
+  },
+  {
+    hostname: "www.jianshu.com",
+    redirectKey: "url",
+    disable: false
+  }
+]
 
 const Sidepanel: React.FC<SidepanelProps> = (props) => {
   const {} = props
@@ -30,7 +46,7 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
 
   const handleClickUrl = (item) => {
     chrome.tabs.create({
-      url: item.url
+      url: `https://${item.hostname}`
     })
   }
 
