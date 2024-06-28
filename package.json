@@ -13,6 +13,7 @@
     "@plasmohq/storage": "^1.11.0",
     "classnames": "^2.5.1",
     "daisyui": "^4.12.8",
+    "dayjs": "^1.11.11",
     "plasmo": "0.88.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"

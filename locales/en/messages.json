@@ -14,5 +14,13 @@
   "cancel": {
     "message": "Cancel",
     "description": ""
+  },
+  "actions_setting": {
+    "message": "Settings",
+    "description": ""
+  },
+  "actions_issues": {
+    "message": "Feature Requests & Issue Reporting",
+    "description": ""
   }
 }

@@ -14,6 +14,9 @@ dependencies:
   daisyui:
     specifier: ^4.12.8
     version: 4.12.8(postcss@8.4.38)
+  dayjs:
+    specifier: ^1.11.11
+    version: 1.11.11
   plasmo:
     specifier: 0.88.0
     version: 0.88.0(postcss@8.4.38)(react-dom@18.2.0)(react@18.2.0)
@@ -3368,6 +3371,10 @@ packages:
       postcss-js: 4.0.1(postcss@8.4.38)
     transitivePeerDependencies:
       - postcss
+    dev: false
+
+  /dayjs@1.11.11:
+    resolution: {integrity: sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==}
     dev: false
 
   /debug@4.3.5:

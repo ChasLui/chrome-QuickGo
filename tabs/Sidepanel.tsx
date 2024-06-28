@@ -4,8 +4,9 @@ import React from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
+import { MaterialSymbolsSettings, StreamlineEmojisBug } from "~components/Icons"
 import Modal from "~components/Modal"
-import { StorageKeys, type DataSourceItem } from "~utils"
+import { ga, StorageKeys, type DataSourceItem } from "~utils"
 
 import "~tailwind.less"
 
@@ -15,16 +16,19 @@ export interface SidepanelProps {}
 
 const defaultData = [
   {
+    id: 1,
     hostname: "link.zhihu.com",
     redirectKey: "target",
     disable: false
   },
   {
+    id: 2,
     hostname: "link.juejin.cn",
     redirectKey: "target",
     disable: false
   },
   {
+    id: 3,
     hostname: "www.jianshu.com",
     redirectKey: "url",
     disable: false
@@ -41,6 +45,7 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
   )
 
   const handleCreate = () => {
+    ga("create")
     setCreateVisible(true)
   }
 
@@ -51,16 +56,19 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
   }
 
   const handleDelete = (item) => {
-    const newDataSource = dataSource.filter((i) => i.hostname !== item.hostname)
+    ga("item_delete")
+    const newDataSource = dataSource.filter((i) => i.id !== item.id)
     setDataSource(newDataSource)
   }
 
   const handleDisable = (item) => {
+    ga("item_disable")
     item.disable = !item.disable
     setDataSource([...dataSource])
   }
 
   const handleCreateSave = (item) => {
+    ga("create_save")
     setDataSource([...dataSource, item])
     setCreateVisible(false)
   }
@@ -68,29 +76,30 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
   const noData = !dataSource.length
 
   return (
-    <div className="p-4">
+    <div className="p-4 h-full flex flex-col">
       {noData && <img src={empty} alt="" />}
-      <div>
-        {dataSource.map((item) => {
-          const { hostname } = item
-          return (
-            <Card
-              key={hostname}
-              item={item}
-              handleDelete={handleDelete}
-              handleDisable={handleDisable}
-              handleClickUrl={handleClickUrl}
-            />
-          )
-        })}
-      </div>
-      <div>
+      <div className="flex-1 overflow-auto">
+        <div>
+          {dataSource.map((item) => {
+            const { id } = item
+            return (
+              <Card
+                key={id}
+                item={item}
+                handleDelete={handleDelete}
+                handleDisable={handleDisable}
+                handleClickUrl={handleClickUrl}
+              />
+            )
+          })}
+        </div>
         <button
           onClick={handleCreate}
           className="btn btn-sm btn-neutral btn-block">
           创建
         </button>
       </div>
+      <Actions className="flex justify-end pt-4" />
       <Create
         onOk={handleCreateSave}
         visible={createVisible}
@@ -175,7 +184,7 @@ const Create = (props) => {
 
   const handleOk = () => {
     if (!hostname || !redirectKey) return
-    if (onOk) onOk({ hostname, redirectKey })
+    if (onOk) onOk({ hostname, redirectKey, id: Date.now() })
     setHostname("")
     setRedirectKey("")
   }
@@ -200,5 +209,44 @@ const Create = (props) => {
         />
       </div>
     </Modal>
+  )
+}
+
+const Actions = (props) => {
+  const { className } = props
+
+  const handleIssue = () => {
+    ga("actions_issues")
+    chrome.tabs.create({
+      url: "https://github.com/Dolov/chrome-QuickGo/issues"
+    })
+  }
+
+  const handleSetting = () => {
+    ga("actions_setting")
+    chrome.tabs.create({
+      url: "tabs/Settings.html"
+    })
+  }
+
+  return (
+    <div className={className}>
+      <div
+        className="tooltip"
+        data-tip={chrome.i18n.getMessage("actions_issues")}>
+        <button onClick={handleIssue} className="btn btn-sm btn-circle mx-2">
+          <StreamlineEmojisBug className="text-xl" />
+        </button>
+      </div>
+      <div
+        className="tooltip"
+        data-tip={chrome.i18n.getMessage("actions_setting")}>
+        <button
+          onClick={handleSetting}
+          className="btn btn-sm btn-circle mx-2 group">
+          <MaterialSymbolsSettings className="text-xl group-hover:text-primary" />
+        </button>
+      </div>
+    </div>
   )
 }

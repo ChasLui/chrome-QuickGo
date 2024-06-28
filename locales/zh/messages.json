@@ -14,6 +14,13 @@
   "cancel": {
     "message": "取消",
     "description": ""
+  },
+  "actions_setting": {
+    "message": "设置",
+    "description": ""
+  },
+  "actions_issues": {
+    "message": "功能申请 & 问题报告",
+    "description": ""
   }
-
 }

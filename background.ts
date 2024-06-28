@@ -1,6 +1,6 @@
 import { Storage } from "@plasmohq/storage"
 
-import { StorageKeys, type DataSourceItem } from "~utils"
+import { ga, StorageKeys, type DataSourceItem } from "~utils"
 
 const storage = new Storage()
 
@@ -67,6 +67,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     if (disable) return
     if (!tab.url.includes(redirectKey)) return
     const url = searchParams.get(redirectKey)
+    ga("redirect")
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
       chrome.tabs.update(activeTab.id, { url })
