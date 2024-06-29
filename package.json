@@ -1,8 +1,8 @@
 {
   "name": "quickgo",
-  "displayName": "QuickGo",
+  "displayName": "__MSG_extensionName__",
   "version": "0.0.1",
-  "description": "A basic Plasmo extension.",
+  "description": "__MSG_extensionDescription__",
   "author": "Dolov. <songyan_shi@163.com>",
   "scripts": {
     "dev": "plasmo dev",

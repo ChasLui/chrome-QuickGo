@@ -96,7 +96,7 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
         <button
           onClick={handleCreate}
           className="btn btn-sm btn-neutral btn-block">
-          创建
+          {chrome.i18n.getMessage("create")}
         </button>
       </div>
       <Actions className="flex justify-end pt-4" />
@@ -139,18 +139,18 @@ const Card = (props) => {
           <button
             onClick={() => handleDisable(item)}
             className="btn btn-xs btn-accent">
-            禁用
+            {chrome.i18n.getMessage("disable")}
           </button>
         )}
         {disable && (
           <button onClick={() => handleDisable(item)} className="btn btn-xs">
-            启用
+            {chrome.i18n.getMessage("enable")}
           </button>
         )}
         <button
           onClick={() => handleDelete(item)}
           className="btn btn-xs btn-secondary ml-2">
-          删除
+          {chrome.i18n.getMessage("delete")}
         </button>
       </div>
     </div>
@@ -173,11 +173,12 @@ const Create = (props) => {
       if (!activeTabUrl) return
       const { hostname, searchParams } = new URL(activeTabUrl)
       setHostname(hostname)
-      if (searchParams.get("url")) {
-        setRedirectKey("url")
-      }
       if (searchParams.get("target")) {
         setRedirectKey("target")
+        return
+      }
+      if (searchParams.get("url")) {
+        setRedirectKey("url")
       }
     })
   }, [visible])

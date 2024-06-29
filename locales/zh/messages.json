@@ -1,10 +1,10 @@
 {
   "extensionName": {
-    "message": "Best Cookier",
+    "message": "QuickGo",
     "description": ""
   },
   "extensionDescription": {
-    "message": "一款颜值超高、操作便捷、功能丰富的高质量 Cookie 管理器。",
+    "message": "摆脱网站安全跳转限制，让访问更顺畅。",
     "description": ""
   },
   "confirm": {
@@ -21,6 +21,22 @@
   },
   "actions_issues": {
     "message": "功能申请 & 问题报告",
+    "description": ""
+  },
+  "create": {
+    "message": "创建",
+    "description": ""
+  },
+  "disable": {
+    "message": "禁用",
+    "description": ""
+  },
+  "enable": {
+    "message": "启用",
+    "description": ""
+  },
+  "delete": {
+    "message": "删除",
     "description": ""
   }
 }

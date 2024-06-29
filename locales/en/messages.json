@@ -1,10 +1,10 @@
 {
   "extensionName": {
-    "message": "Best Cookier",
+    "message": "QuickGo",
     "description": ""
   },
   "extensionDescription": {
-    "message": "A high-quality cookie manager with stylish design, convenient operation, and rich features.",
+    "message": "Say goodbye to annoying safe redirects, and enjoy smoother access.",
     "description": ""
   },
   "confirm": {
@@ -20,7 +20,23 @@
     "description": ""
   },
   "actions_issues": {
-    "message": "Feature Requests & Issue Reporting",
+    "message": "Feature Requests & Bug Reports",
+    "description": ""
+  },
+  "create": {
+    "message": "Create",
+    "description": ""
+  },
+  "disable": {
+    "message": "Disable",
+    "description": ""
+  },
+  "enable": {
+    "message": "Enable",
+    "description": ""
+  },
+  "delete": {
+    "message": "Delete",
     "description": ""
   }
 }
