@@ -2,7 +2,7 @@ import React from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
-import { ga, StorageKeys } from "~utils"
+import { ga, GaEvents, StorageKeys } from "~utils"
 
 export const useBoolean = (defaultValue = false) => {
   const [value, setValue] = React.useState(defaultValue)
@@ -148,7 +148,7 @@ export const useThemeChange = () => {
   const { theme } = settings
 
   const setTheme = (theme: string) => {
-    ga("setting_theme", {
+    ga(GaEvents.SETTING_THEME, {
       value: theme
     })
     setSettings({

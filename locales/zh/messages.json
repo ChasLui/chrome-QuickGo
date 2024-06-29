@@ -42,5 +42,9 @@
   "settings_theme": {
     "message": "主题配置",
     "description": ""
+  },
+  "existed": {
+    "message": "已存在",
+    "description": ""
   }
 }

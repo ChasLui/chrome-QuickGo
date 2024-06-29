@@ -3,6 +3,18 @@ export enum StorageKeys {
   SETTINGS = "SETTINGS"
 }
 
+export enum GaEvents {
+  CREATE = "create",
+  CREATE_SAVE = "create_save",
+  ITEM_EDIT = "item_edit",
+  ITEM_DISABLE = "item_disable",
+  ITEM_DELETE = "item_delete",
+  REDIRECT = "redirect",
+  ACTIONS_ISSUE = "actions_issues",
+  ACTIONS_SETTING = "actions_setting",
+  SETTING_THEME = "setting_theme"
+}
+
 export interface DataSourceItem {
   id: number
   disable: boolean

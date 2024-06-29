@@ -1,3 +1,4 @@
+import classnames from "classnames"
 import React from "react"
 
 export interface ModalProps {
@@ -6,10 +7,12 @@ export interface ModalProps {
   children: React.ReactNode
   title?: React.ReactNode
   onOk?: () => void
+  okButtonProps?: Record<string, any>
 }
 
 const Modal: React.FC<ModalProps> = (props) => {
-  const { children, visible, onClose, title, onOk } = props
+  const { children, visible, onClose, title, onOk, okButtonProps } = props
+  const { disabled } = okButtonProps || {}
 
   const id = React.useMemo(() => {
     return `modal-${Date.now()}`
@@ -37,7 +40,11 @@ const Modal: React.FC<ModalProps> = (props) => {
           <button onClick={onClose} className="btn btn-sm">
             {chrome.i18n.getMessage("cancel")}
           </button>
-          <button onClick={handleOk} className="btn btn-sm btn-primary">
+          <button
+            onClick={handleOk}
+            className={classnames("btn btn-sm btn-primary", {
+              "btn-disabled": disabled
+            })}>
             {chrome.i18n.getMessage("confirm")}
           </button>
         </div>

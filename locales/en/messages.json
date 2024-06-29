@@ -42,5 +42,9 @@
   "settings_theme": {
     "message": "Theme",
     "description": ""
+  },
+  "existed": {
+    "message": "Existed",
+    "description": ""
   }
 }

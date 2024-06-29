@@ -7,7 +7,7 @@ import { useStorage } from "@plasmohq/storage/hook"
 import { useThemeChange } from "~components/hooks"
 import { MaterialSymbolsSettings, StreamlineEmojisBug } from "~components/Icons"
 import Modal from "~components/Modal"
-import { ga, StorageKeys, type DataSourceItem } from "~utils"
+import { ga, GaEvents, StorageKeys, type DataSourceItem } from "~utils"
 
 import "~tailwind.less"
 
@@ -47,14 +47,19 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
     defaultData
   )
 
+  React.useEffect(() => {
+    if (createVisible) return
+    editRef.current = null
+  }, [createVisible])
+
   const handleCreate = () => {
-    ga("create")
+    ga(GaEvents.CREATE)
     editRef.current = null
     setCreateVisible(true)
   }
 
   const handleEdit = (item: DataSourceItem) => {
-    ga("item_edit")
+    ga(GaEvents.ITEM_EDIT)
     editRef.current = item
     setCreateVisible(true)
   }
@@ -66,19 +71,19 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
   }
 
   const handleDelete = (item: DataSourceItem) => {
-    ga("item_delete")
+    ga(GaEvents.ITEM_DELETE)
     const newDataSource = dataSource.filter((i) => i.id !== item.id)
     setDataSource(newDataSource)
   }
 
   const handleDisable = (item: DataSourceItem) => {
-    ga("item_disable")
+    ga(GaEvents.ITEM_DISABLE)
     item.disable = !item.disable
     setDataSource([...dataSource])
   }
 
   const handleCreateSave = (item: DataSourceItem) => {
-    ga("create_save")
+    ga(GaEvents.CREATE_SAVE)
     if (editRef.current) {
       const index = dataSource.findIndex((i) => i.id === editRef.current.id)
       const newDataSource = [...dataSource]
@@ -94,7 +99,6 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
 
   return (
     <div className="h-full flex flex-col">
-      <button onClick={() => setDataSource(defaultData)}>shezhi</button>
       {noData && <img src={empty} alt="" />}
       <div className="flex-1 overflow-auto">
         <div>
@@ -123,6 +127,7 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
         onOk={handleCreateSave}
         visible={createVisible}
         editData={editRef.current}
+        dataSource={dataSource}
         onClose={() => setCreateVisible(false)}
       />
     </div>
@@ -180,9 +185,22 @@ const Card = (props) => {
 }
 
 const Create = (props) => {
-  const { visible, onClose, onOk, editData } = props
+  const { visible, onClose, onOk, editData, dataSource } = props
   const [matchUrl, setMatchUrl] = React.useState("")
   const [redirectKey, setRedirectKey] = React.useState("")
+  const [existed, setExisted] = React.useState(false)
+  const create = !editData
+
+  React.useEffect(() => {
+    if (!create) return
+    const existed = dataSource.find((i) => i.matchUrl === matchUrl)
+    setExisted(!!existed)
+  }, [create, matchUrl])
+
+  React.useEffect(() => {
+    if (visible) return
+    setExisted(false)
+  }, [visible])
 
   /** 编辑 */
   React.useEffect(() => {
@@ -225,15 +243,31 @@ const Create = (props) => {
   }
 
   return (
-    <Modal visible={visible} onClose={onClose} onOk={handleOk}>
+    <Modal
+      visible={visible}
+      onClose={onClose}
+      onOk={handleOk}
+      okButtonProps={{ disabled: existed }}>
       <div className="flex flex-col justify-center items-center">
-        <input
-          type="text"
-          placeholder="Type url here"
-          className="input input-bordered input-primary w-[97%] max-w-xs mb-4"
-          value={matchUrl}
-          onChange={(e) => setMatchUrl(e.target.value)}
-        />
+        <div className="mb-4 w-full flex flex-col justify-center items-center">
+          <input
+            type="text"
+            placeholder="Type url here"
+            className={classnames(
+              "input input-bordered input-primary w-[97%] max-w-xs",
+              {
+                "input-error": existed
+              }
+            )}
+            value={matchUrl}
+            onChange={(e) => setMatchUrl(e.target.value)}
+          />
+          {existed && (
+            <div className="text-xs text-error mt-2 w-[97%]">
+              {chrome.i18n.getMessage("existed")}
+            </div>
+          )}
+        </div>
         <input
           autoFocus
           type="text"
@@ -251,14 +285,15 @@ const Actions = (props) => {
   const { className } = props
 
   const handleIssue = () => {
-    ga("actions_issues")
+    ga(GaEvents.ACTIONS_ISSUE)
+
     chrome.tabs.create({
       url: "https://github.com/Dolov/chrome-QuickGo/issues"
     })
   }
 
   const handleSetting = () => {
-    ga("actions_setting")
+    ga(GaEvents.ACTIONS_SETTING)
     chrome.tabs.create({
       url: "tabs/Settings.html"
     })

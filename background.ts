@@ -1,6 +1,6 @@
 import { Storage } from "@plasmohq/storage"
 
-import { ga, StorageKeys, type DataSourceItem } from "~utils"
+import { ga, GaEvents, StorageKeys, type DataSourceItem } from "~utils"
 
 const storage = new Storage()
 
@@ -78,7 +78,7 @@ const quickgo = (url: string) => {
     if (disable) return
     if (!url.includes(redirectKey)) return
     const redirectUrl = searchParams.get(redirectKey)
-    ga("redirect")
+    ga(GaEvents.REDIRECT)
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
       chrome.tabs.update(activeTab.id, { url: redirectUrl })
