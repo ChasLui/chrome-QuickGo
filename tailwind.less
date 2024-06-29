@@ -2,159 +2,164 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer components {
-	.ellipsis {
-		@apply overflow-ellipsis overflow-hidden whitespace-nowrap;
-	}
+  .ellipsis {
+    @apply overflow-ellipsis overflow-hidden whitespace-nowrap;
+  }
 
-	.h-center {
-		@apply flex items-center;
-	}
+  .h-center {
+    @apply flex items-center;
+  }
 
-	.x-center {
-		@apply flex justify-center;
-	}
+  .x-center {
+    @apply flex justify-center;
+  }
 
-	.center {
-		@apply flex justify-center items-center;
-	}
+  .center {
+    @apply flex justify-center items-center;
+  }
 
-	.no-scrollbar::-webkit-scrollbar {
-		@apply hidden;
-	}
+  .no-scrollbar::-webkit-scrollbar {
+    @apply hidden;
+  }
 }
 
 #__plasmo {
-	height: 100vh;
-	background-image: repeating-linear-gradient(45deg, var(--fallback-b1, oklch(var(--b1))), var(--fallback-b1, oklch(var(--b1))) 13px, var(--fallback-b2, oklch(var(--b2))) 13px, var(--fallback-b2, oklch(var(--b2))) 14px);
+  height: 100vh;
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--fallback-b1, oklch(var(--b1))),
+    var(--fallback-b1, oklch(var(--b1))) 13px,
+    var(--fallback-b2, oklch(var(--b2))) 13px,
+    var(--fallback-b2, oklch(var(--b2))) 14px
+  );
 }
-
-
-
 
 @bounceIn: ~"bubble-bounceIn";
 @bounceOut: ~"bubble-bounceOut";
 
 @keyframes @bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
 
-	from,
-	20%,
-	40%,
-	60%,
-	80%,
-	to {
-		-webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-	}
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
 
-	0% {
-		opacity: 0;
-		-webkit-transform: scale3d(0.3, 0.3, 0.3);
-		transform: scale3d(0.3, 0.3, 0.3);
-	}
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
 
-	20% {
-		-webkit-transform: scale3d(1.1, 1.1, 1.1);
-		transform: scale3d(1.1, 1.1, 1.1);
-	}
+  40% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9);
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
 
-	40% {
-		-webkit-transform: scale3d(0.9, 0.9, 0.9);
-		transform: scale3d(0.9, 0.9, 0.9);
-	}
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
 
-	60% {
-		opacity: 1;
-		-webkit-transform: scale3d(1.03, 1.03, 1.03);
-		transform: scale3d(1.03, 1.03, 1.03);
-	}
+  80% {
+    -webkit-transform: scale3d(0.97, 0.97, 0.97);
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
 
-	80% {
-		-webkit-transform: scale3d(0.97, 0.97, 0.97);
-		transform: scale3d(0.97, 0.97, 0.97);
-	}
-
-	to {
-		opacity: 1;
-		-webkit-transform: scale3d(1, 1, 1);
-		transform: scale3d(1, 1, 1);
-	}
+  to {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
 }
 
 @keyframes @bounceOut {
-	20% {
-		-webkit-transform: scale3d(0.9, 0.9, 0.9);
-		transform: scale3d(0.9, 0.9, 0.9);
-	}
+  20% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9);
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
 
-	50%,
-	55% {
-		opacity: 1;
-		-webkit-transform: scale3d(1.1, 1.1, 1.1);
-		transform: scale3d(1.1, 1.1, 1.1);
-	}
+  50%,
+  55% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
 
-	to {
-		opacity: 0;
-		-webkit-transform: scale3d(0.3, 0.3, 0.3);
-		transform: scale3d(0.3, 0.3, 0.3);
-	}
+  to {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
 }
 
 .bubble {
-	z-index: 999;
-	position: relative;
+  z-index: 999;
+  position: relative;
 
-	&-surround {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		margin-top: var(--offset-size);
-		margin-left: var(--offset-size);
-		display: none;
-		z-index: -1;
+  &-surround {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: var(--offset-size);
+    margin-left: var(--offset-size);
+    display: none;
+    z-index: -1;
 
-		&.animate {
-			display: block;
-		}
+    &.animate {
+      display: block;
+    }
 
-		&.animate.visible {
-			animation: @bounceIn 0.3s;
-		}
+    &.animate.visible {
+      animation: @bounceIn 0.3s;
+    }
 
-		&.animate.hidden {
-			animation: @bounceOut 0.3s forwards;
-		}
-	}
+    &.animate.hidden {
+      animation: @bounceOut 0.3s forwards;
+    }
+  }
 
-	&-sub {
-		top: var(--offset-size);
-		left: var(--offset-size);
-		position: absolute;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+  &-sub {
+    top: var(--offset-size);
+    left: var(--offset-size);
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-		&:hover {
-			box-shadow: 0 2px 10px 0 var(--color), 0 2px 8px 0 var(--color);
-		}
-	}
+    &:hover {
+      box-shadow:
+        0 2px 10px 0 var(--color),
+        0 2px 8px 0 var(--color);
+    }
+  }
 
-	&:hover {
-		box-shadow: 0 2px 10px 0 var(--color), 0 2px 8px 0 var(--color);
-	}
+  &:hover {
+    box-shadow:
+      0 2px 10px 0 var(--color),
+      0 2px 8px 0 var(--color);
+  }
 
-	&.attach {
-		transition: .3s;
+  &.attach {
+    transition: 0.3s;
 
-		&.right:hover {
-			border-radius: 50% 0 0 50%;
-		}
+    &.right:hover {
+      border-radius: 50% 0 0 50%;
+    }
 
-		&.left:hover {
-			border-radius: 0 50% 50% 0;
-		}
-	}
+    &.left:hover {
+      border-radius: 0 50% 50% 0;
+    }
+  }
 }
