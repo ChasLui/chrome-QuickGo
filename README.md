@@ -14,38 +14,38 @@
 
 <div align="center">
 
-[Chrome Web Store](https://chromewebstore.google.com/detail/quickgo/homllehcipjgpbpepcojhgcpfdopjhml) Get rid of website security redirect restrictions for smoother access.
+[chrome web store](https://chromewebstore.google.com/detail/quickgo/homllehcipjgpbpepcojhgcpfdopjhml) 摆脱网站安全跳转限制，让访问更顺畅。
 
-[Simplified Chinese](https://github.com/Dolov/chrome-QuickGo/blob/main/README.md) | English
+[English](https://github.com/Dolov/chrome-QuickGo/blob/main/README.en-US.md) | 简体中文
 
 </div>
 
-### Features
+### 功能
 
-Many websites have security redirects when accessing external addresses, which can be very time-consuming. This extension can skip security interceptions and quickly access the target URL.
+现在很多站点在访问站外地址时会出现安全跳转，非常浪费时间。该扩展可以跳过安全拦截，快速访问目标网址。
 
-- Supports address configuration.
-- Supports theme configuration.
+- 支持地址配置。
+- 支持主题配置。
 
-### Instructions
+### 使用说明
 
-1. When a security redirect occurs on a site, click the extension icon, and an extension page will pop up on the right side of the page.
-2. Click the create button, and a pop-up box will appear.
-3. Enter the current website address in the pop-up box (usually no need to fill in, there is a default value)
-4. Enter the redirection parameter name in the pop-up box, you can observe the address bar (if it is target or url, it will automatically fill in)
-5. Save and refresh the page
+1. 当在某个站点出现安全跳转时，点击扩展图标，然后页面右侧会弹窗扩展页面。
+2. 点击创建按钮，出现弹出框。
+3. 在弹出框输入当前网站地址（通常不需要填写，有默认值）
+4. 在弹窗框输入重定向参数名，可观察地址栏（如果是 target 或者 url 会自动填写）
+5. 保存，刷新页面即可
 
-### Example
+### 示例
 
 ![img](./screenshots/WX20240629-150546@2x.png)
 
-### Welcome
+### 欢迎使用
 
-If you encounter problems during use or have new feature requests, you can provide feedback in the issues.
+使用过程中遇到问题或者有新功能的需求可以在 issues 中进行反馈。
 
-### Development Build
+### 开发构建
 
-1. Install Node.js https://nodejs.org/en/download/package-manager
+1. 安装 nodejs https://nodejs.org/en/download/package-manager
 2. npm i
 3. npm build
 4. npm package
