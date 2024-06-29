@@ -6,6 +6,7 @@ import { useStorage } from "@plasmohq/storage/hook"
 
 import { useThemeChange } from "~components/hooks"
 import { MaterialSymbolsSettings, StreamlineEmojisBug } from "~components/Icons"
+import Img from "~components/Img"
 import Modal from "~components/Modal"
 import { ga, GaEvents, StorageKeys, type DataSourceItem } from "~utils"
 
@@ -153,7 +154,9 @@ const Card = (props) => {
         }
       )}>
       <div className="flex items-center flex-1 overflow-auto">
-        <img className="w-6 h-6" src={src} alt="" />
+        <div className="w-6 h-6 min-w-6 min-h-6">
+          <Img className="w-full h-full" src={src} alt="" />
+        </div>
         <a
           target="_blank"
           className="link font-bold ml-3 text-sm ellipsis"
