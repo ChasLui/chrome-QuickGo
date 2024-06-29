@@ -2,6 +2,8 @@ import React from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
+import { ga, StorageKeys } from "~utils"
+
 export const useBoolean = (defaultValue = false) => {
   const [value, setValue] = React.useState(defaultValue)
   const valueRef = React.useRef<boolean>()
@@ -134,4 +136,32 @@ export function useControllableValue<T>(
   }, [value])
 
   return [mergedValue, triggerChange] as const
+}
+
+export const useThemeChange = () => {
+  const [settings, setSettings] = useStorage<{
+    theme?: string
+  }>(StorageKeys.SETTINGS, {
+    theme: "light"
+  })
+
+  const { theme } = settings
+
+  const setTheme = (theme: string) => {
+    ga("setting_theme", {
+      value: theme
+    })
+    setSettings({
+      ...settings,
+      theme
+    })
+  }
+
+  React.useEffect(() => {
+    if (!theme) return
+    const html = document.querySelector("html")
+    html.setAttribute("data-theme", theme)
+  }, [theme])
+
+  return [theme, setTheme]
 }

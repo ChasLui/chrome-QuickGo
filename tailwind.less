@@ -2,7 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+#__plasmo {
+  @apply p-4;
+  height: 100vh;
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--fallback-b1, oklch(var(--b1))),
+    var(--fallback-b1, oklch(var(--b1))) 13px,
+    var(--fallback-b2, oklch(var(--b2))) 13px,
+    var(--fallback-b2, oklch(var(--b2))) 14px
+  );
+}
+
 @layer components {
+  .item-border {
+    @apply border-base-content/20 hover:border-base-content/40 border outline outline-2 outline-offset-2 outline-transparent;
+  }
+
+  .item-border-active {
+    @apply !outline-base-content;
+  }
+
   .ellipsis {
     @apply overflow-ellipsis overflow-hidden whitespace-nowrap;
   }
@@ -19,20 +39,16 @@
     @apply flex justify-center items-center;
   }
 
+  .active {
+    background-color: var(--fallback-n, oklch(var(--n) / var(--tw-bg-opacity)));
+    color: var(--fallback-nc, oklch(var(--nc) / var(--tw-text-opacity)));
+    --tw-bg-opacity: 1;
+    --tw-text-opacity: 1;
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     @apply hidden;
   }
-}
-
-#__plasmo {
-  height: 100vh;
-  background-image: repeating-linear-gradient(
-    45deg,
-    var(--fallback-b1, oklch(var(--b1))),
-    var(--fallback-b1, oklch(var(--b1))) 13px,
-    var(--fallback-b2, oklch(var(--b2))) 13px,
-    var(--fallback-b2, oklch(var(--b2))) 14px
-  );
 }
 
 @bounceIn: ~"bubble-bounceIn";

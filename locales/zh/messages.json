@@ -38,5 +38,9 @@
   "delete": {
     "message": "删除",
     "description": ""
+  },
+  "settings_theme": {
+    "message": "主题配置",
+    "description": ""
   }
 }

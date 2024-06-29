@@ -38,5 +38,9 @@
   "delete": {
     "message": "Delete",
     "description": ""
+  },
+  "settings_theme": {
+    "message": "Theme",
+    "description": ""
   }
 }

@@ -49,28 +49,39 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
 /** 监听图标点击 */
 chrome.action.onClicked.addListener(async (activeTab) => {})
-
+/** 监听新标签 */
 chrome.tabs.onCreated.addListener(function (tab) {})
+
+chrome.webNavigation.onCommitted.addListener(function (details) {
+  // 页面刷新
+  if (details.transitionType !== "reload") return
+  quickgo(details.url)
+})
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   const { status, url } = changeInfo
   if (status !== "loading" || !url) return
-  const urlObj = new URL(tab.url)
-  const { hostname, searchParams } = urlObj
+  quickgo(url)
+})
+
+const quickgo = (url: string) => {
+  const urlObj = new URL(url)
+  const { hostname, pathname, searchParams } = urlObj
   if (!hostname) return
   storage.get(StorageKeys.DATA_SOURCE).then((data) => {
     if (!data) return
+    const matchUrl = pathname ? `${hostname}${pathname}` : hostname
     const dataSource = data as unknown as DataSourceItem[]
-    const item = dataSource.find((i) => i.hostname === hostname)
+    const item = dataSource.find((i) => i.matchUrl === matchUrl)
     if (!item) return
     const { disable, redirectKey } = item
     if (disable) return
-    if (!tab.url.includes(redirectKey)) return
-    const url = searchParams.get(redirectKey)
+    if (!url.includes(redirectKey)) return
+    const redirectUrl = searchParams.get(redirectKey)
     ga("redirect")
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
-      chrome.tabs.update(activeTab.id, { url })
+      chrome.tabs.update(activeTab.id, { url: redirectUrl })
     })
   })
-})
+}

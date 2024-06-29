@@ -1,12 +1,13 @@
 export enum StorageKeys {
-  DATA_SOURCE = "DATA_SOURCE"
+  DATA_SOURCE = "DATA_SOURCE",
+  SETTINGS = "SETTINGS"
 }
 
 export interface DataSourceItem {
   id: number
-  hostname: string
-  redirectKey: string
   disable: boolean
+  matchUrl: string
+  redirectKey: string
 }
 
 export function formatDateTime() {
