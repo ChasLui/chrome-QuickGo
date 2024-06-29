@@ -1,6 +1,12 @@
 import { Storage } from "@plasmohq/storage"
 
-import { ga, GaEvents, StorageKeys, type DataSourceItem } from "~utils"
+import {
+  defaultData,
+  ga,
+  GaEvents,
+  StorageKeys,
+  type DataSourceItem
+} from "~utils"
 
 const storage = new Storage()
 
@@ -69,9 +75,8 @@ const quickgo = (url: string) => {
   const { hostname, pathname, searchParams } = urlObj
   if (!hostname) return
   storage.get(StorageKeys.DATA_SOURCE).then((data) => {
-    if (!data) return
+    const dataSource = (data as unknown as DataSourceItem[]) || defaultData
     const matchUrl = pathname ? `${hostname}${pathname}` : hostname
-    const dataSource = data as unknown as DataSourceItem[]
     const item = dataSource.find((i) => i.matchUrl === matchUrl)
     if (!item) return
     const { disable, redirectKey } = item

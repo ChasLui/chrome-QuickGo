@@ -3,6 +3,27 @@ export enum StorageKeys {
   SETTINGS = "SETTINGS"
 }
 
+export const defaultData = [
+  {
+    id: 1,
+    matchUrl: "link.zhihu.com/",
+    redirectKey: "target",
+    disable: false
+  },
+  {
+    id: 2,
+    matchUrl: "link.juejin.cn/",
+    redirectKey: "target",
+    disable: false
+  },
+  {
+    id: 3,
+    matchUrl: "www.jianshu.com/go-wild",
+    redirectKey: "url",
+    disable: false
+  }
+]
+
 export enum GaEvents {
   CREATE = "create",
   CREATE_SAVE = "create_save",
