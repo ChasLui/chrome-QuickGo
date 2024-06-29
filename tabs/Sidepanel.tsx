@@ -184,6 +184,7 @@ const Create = (props) => {
   const [redirectKey, setRedirectKey] = React.useState("")
   const [existed, setExisted] = React.useState(false)
   const create = !editData
+  const redirectKeyInputRef = React.useRef<HTMLInputElement>()
 
   React.useEffect(() => {
     if (!create) return
@@ -192,7 +193,10 @@ const Create = (props) => {
   }, [create, matchUrl])
 
   React.useEffect(() => {
-    if (visible) return
+    if (visible) {
+      redirectKeyInputRef.current.focus()
+      return
+    }
     setExisted(false)
   }, [visible])
 
@@ -246,7 +250,7 @@ const Create = (props) => {
         <div className="mb-4 w-full flex flex-col justify-center items-center">
           <input
             type="text"
-            placeholder="Type url here"
+            placeholder={chrome.i18n.getMessage("placeholder_url")}
             className={classnames(
               "input input-bordered input-primary w-[97%] max-w-xs",
               {
@@ -263,9 +267,9 @@ const Create = (props) => {
           )}
         </div>
         <input
-          autoFocus
+          ref={redirectKeyInputRef}
           type="text"
-          placeholder="Type redirect key here"
+          placeholder={chrome.i18n.getMessage("placeholder_parameter")}
           className="input input-bordered input-primary w-[97%] max-w-xs"
           value={redirectKey}
           onChange={(e) => setRedirectKey(e.target.value)}

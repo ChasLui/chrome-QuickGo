@@ -46,5 +46,13 @@
   "existed": {
     "message": "Existed",
     "description": ""
+  },
+  "placeholder_url": {
+    "message": "Type url here",
+    "description": ""
+  },
+  "placeholder_parameter": {
+    "message": "Type redirect parameter name here",
+    "description": ""
   }
 }

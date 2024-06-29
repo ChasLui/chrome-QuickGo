@@ -46,5 +46,13 @@
   "existed": {
     "message": "已存在",
     "description": ""
+  },
+  "placeholder_url": {
+    "message": "请输入网址",
+    "description": ""
+  },
+  "placeholder_parameter": {
+    "message": "请输入重定向参数名",
+    "description": ""
   }
 }
