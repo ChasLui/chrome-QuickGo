@@ -10,14 +10,17 @@ import {
 
 const storage = new Storage()
 
+// 初始化侧边栏行为
 chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
   .catch((error) => console.error(error))
 
-/** 定义右键菜单列表 */
-const menuList: (chrome.contextMenus.CreateProperties & {
+// 定义右键菜单项
+interface MenuItem extends chrome.contextMenus.CreateProperties {
   action?(tab: chrome.tabs.Tab): void
-})[] = [
+}
+
+const menuList: MenuItem[] = [
   {
     id: "issues",
     title: "功能申请 && 问题反馈",
@@ -38,55 +41,60 @@ const menuList: (chrome.contextMenus.CreateProperties & {
   }
 ]
 
-/** 创建右键菜单 */
-menuList.forEach((item) => {
-  const { action, ...menuProps } = item
-  chrome.contextMenus.create(menuProps)
-})
+// 创建右键菜单
+function createContextMenus(menuList: MenuItem[]) {
+  menuList.forEach(({ action, ...menuProps }) => {
+    chrome.contextMenus.create(menuProps)
+  })
+}
 
-/** 监听右键菜单的点击事件，执行对应的行为 */
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  const { menuItemId } = info
-  const menu = menuList.find((item) => item.id === menuItemId)
-  if (!menu) return
-  const { action } = menu
-  action && action(tab)
-})
+// 监听右键菜单点击事件
+function setupContextMenuListeners(menuList: MenuItem[]) {
+  chrome.contextMenus.onClicked.addListener((info, tab) => {
+    const menu = menuList.find((item) => item.id === info.menuItemId)
+    menu?.action?.(tab)
+  })
+}
 
-/** 监听图标点击 */
-chrome.action.onClicked.addListener(async (activeTab) => {})
-/** 监听新标签 */
-chrome.tabs.onCreated.addListener(function (tab) {})
+// 监听页面导航事件
+function setupNavigationListeners() {
+  const handleNavigation = async (url: string, tabId: number) => {
+    const urlObj = new URL(url)
+    const { hostname, pathname, searchParams } = urlObj
+    if (!hostname) return
 
-chrome.webNavigation.onCommitted.addListener(function (details) {
-  // 页面刷新
-  if (details.transitionType !== "reload") return
-  quickgo(details.url)
-})
-
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  const { status, url } = changeInfo
-  if (status !== "loading" || !url) return
-  quickgo(url)
-})
-
-const quickgo = (url: string) => {
-  const urlObj = new URL(url)
-  const { hostname, pathname, searchParams } = urlObj
-  if (!hostname) return
-  storage.get(StorageKeys.DATA_SOURCE).then((data) => {
+    const data = await storage.get(StorageKeys.DATA_SOURCE)
     const dataSource = (data as unknown as DataSourceItem[]) || defaultData
     const matchUrl = pathname ? `${hostname}${pathname}` : hostname
     const item = dataSource.find((i) => i.matchUrl === matchUrl)
-    if (!item) return
-    const { disable, redirectKey } = item
-    if (disable) return
-    if (!url.includes(redirectKey)) return
-    const redirectUrl = searchParams.get(redirectKey)
-    ga(GaEvents.REDIRECT)
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTab = tabs[0]
-      chrome.tabs.update(activeTab.id, { url: redirectUrl })
-    })
+
+    if (!item || item.disable || !url.includes(item.redirectKey)) return
+
+    const redirectUrl = searchParams.get(item.redirectKey)
+    if (redirectUrl) {
+      ga(GaEvents.REDIRECT)
+      chrome.tabs.update(tabId, { url: redirectUrl })
+    }
+  }
+
+  chrome.webNavigation.onCommitted.addListener((details) => {
+    if (details.transitionType === "reload") {
+      handleNavigation(details.url, details.tabId)
+    }
+  })
+
+  chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.status === "loading" && changeInfo.url) {
+      handleNavigation(changeInfo.url, tabId)
+    }
   })
 }
+
+// 初始化
+function init() {
+  createContextMenus(menuList)
+  setupContextMenuListeners(menuList)
+  setupNavigationListeners()
+}
+
+init()

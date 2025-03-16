@@ -5,10 +5,6 @@ import { useThemeChange } from "~components/hooks"
 
 import "~tailwind.less"
 
-import { useStorage } from "@plasmohq/storage/hook"
-
-import { StorageKeys } from "~utils"
-
 const themes = [
   "light",
   "dark",
