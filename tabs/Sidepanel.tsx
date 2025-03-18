@@ -5,13 +5,19 @@ import React from "react"
 import { useStorage } from "@plasmohq/storage/hook"
 
 import { useThemeChange } from "~components/hooks"
-import { MaterialSymbolsSettings, StreamlineEmojisBug } from "~components/Icons"
+import {
+  MaterialSymbolsDelete,
+  MaterialSymbolsSettings,
+  StreamlineEmojisBug
+} from "~components/Icons"
 import Img from "~components/Img"
 import Modal from "~components/Modal"
 import {
   defaultData,
+  faviconMap,
   ga,
   GaEvents,
+  getTopLevelDomain,
   StorageKeys,
   type DataSourceItem
 } from "~utils"
@@ -28,10 +34,26 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
   useThemeChange()
   const editRef = React.useRef<DataSourceItem>()
   const [createVisible, setCreateVisible] = React.useState(false)
-  const [dataSource, setDataSource] = useStorage<DataSourceItem[]>(
+  const [data, setDataSource] = useStorage<DataSourceItem[]>(
     StorageKeys.DATA_SOURCE,
-    defaultData
+    []
   )
+
+  const dataSource = React.useMemo(() => {
+    const custom = data.filter((i) => {
+      return !defaultData.find((j) => j.id === i.id)
+    })
+
+    const defaults = defaultData.map((i) => {
+      const { id } = i
+      const existed = data.find((j) => j.id === id)
+      return {
+        ...i,
+        disable: existed?.disable ?? false
+      }
+    })
+    return [...defaults, ...custom]
+  }, [data])
 
   React.useEffect(() => {
     if (createVisible) return
@@ -126,12 +148,12 @@ export default Sidepanel
 const Card = (props) => {
   const { item, handleClickUrl, handleDisable, handleDelete, handleEdit } =
     props
-  const { matchUrl, disable } = item as DataSourceItem
-  const fUrl = matchUrl
-    .replace("https://", "")
-    .replace("http://", "")
-    .replace("www.", "")
-  const url = `https://favicon.freeless.cn/icon/${encodeURIComponent(fUrl)}`
+
+  const { matchUrl, disable, isDefault, id } = item as DataSourceItem
+  const favicon = faviconMap[id]
+  const domain = getTopLevelDomain(matchUrl)
+  const iconUrl =
+    favicon || `https://www.faviconextractor.com/favicon/${domain}`
 
   return (
     <div
@@ -145,8 +167,8 @@ const Card = (props) => {
         }
       )}>
       <div className="flex items-center flex-1 overflow-auto">
-        <div className="w-6 h-6 min-w-6 min-h-6">
-          <Img className="w-full h-full" src={url} alt="" />
+        <div className="w-8 h-8 min-w-6 min-h-6">
+          <Img className="w-full h-full rounded-md" src={iconUrl} alt="" />
         </div>
         <a
           target="_blank"
@@ -168,11 +190,13 @@ const Card = (props) => {
             {chrome.i18n.getMessage("enable")}
           </button>
         )}
-        <button
-          onClick={() => handleDelete(item)}
-          className="btn btn-xs btn-secondary ml-2">
-          {chrome.i18n.getMessage("delete")}
-        </button>
+        {!isDefault && (
+          <button
+            onClick={() => handleDelete(item)}
+            className="btn btn-xs btn-error ml-2">
+            {chrome.i18n.getMessage("delete")}
+          </button>
+        )}
       </div>
     </div>
   )
@@ -234,7 +258,7 @@ const Create = (props) => {
 
   const handleOk = () => {
     if (!matchUrl || !redirectKey) return
-    const id = editData?.id || Date.now()
+    const id = editData?.id || `${Date.now()}`
     if (onOk) onOk({ matchUrl, redirectKey, id })
     setMatchUrl("")
     setRedirectKey("")
@@ -252,7 +276,7 @@ const Create = (props) => {
             type="text"
             placeholder={chrome.i18n.getMessage("placeholder_url")}
             className={classnames(
-              "input input-bordered input-primary w-[97%] max-w-xs",
+              "input input-bordered input-neutral w-[97%] max-w-xs",
               {
                 "input-error": existed
               }
@@ -270,7 +294,7 @@ const Create = (props) => {
           ref={redirectKeyInputRef}
           type="text"
           placeholder={chrome.i18n.getMessage("placeholder_parameter")}
-          className="input input-bordered input-primary w-[97%] max-w-xs"
+          className="input input-bordered input-neutral w-[97%] max-w-xs"
           value={redirectKey}
           onChange={(e) => setRedirectKey(e.target.value)}
         />

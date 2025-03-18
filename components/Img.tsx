@@ -4,7 +4,7 @@ import React from "react"
 export interface ImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {}
 
 const Img: React.FC<ImgProps> = (props) => {
-  const { src } = props
+  const { src, className } = props
   const [imageUrl, setImageUrl] = React.useState(src)
 
   React.useEffect(() => {
@@ -19,7 +19,7 @@ const Img: React.FC<ImgProps> = (props) => {
     setImageUrl(icon)
   }
 
-  return <img src={imageUrl} onError={onError} />
+  return <img className={className} src={imageUrl} onError={onError} />
 }
 
 export default Img

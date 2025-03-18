@@ -52,7 +52,7 @@
     "description": ""
   },
   "placeholder_parameter": {
-    "message": "请输入重定向参数名",
+    "message": "请输入 url 中的重定向参数",
     "description": ""
   }
 }
