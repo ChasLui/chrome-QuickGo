@@ -5,18 +5,14 @@ import React from "react"
 import { useStorage } from "@plasmohq/storage/hook"
 
 import { useThemeChange } from "~components/hooks"
-import {
-  MaterialSymbolsDelete,
-  MaterialSymbolsSettings,
-  StreamlineEmojisBug
-} from "~components/Icons"
+import { MaterialSymbolsSettings, StreamlineEmojisBug } from "~components/Icons"
 import Img from "~components/Img"
 import Modal from "~components/Modal"
 import {
-  defaultData,
   faviconMap,
   ga,
   GaEvents,
+  getMergedData,
   getTopLevelDomain,
   StorageKeys,
   type DataSourceItem
@@ -25,8 +21,6 @@ import {
 import "~tailwind.less"
 
 export interface SidepanelProps {}
-
-// https://link.zhihu.com/?target=https%3A//www.python.org/
 
 const Sidepanel: React.FC<SidepanelProps> = (props) => {
   const {} = props
@@ -40,19 +34,7 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
   )
 
   const dataSource = React.useMemo(() => {
-    const custom = data.filter((i) => {
-      return !defaultData.find((j) => j.id === i.id)
-    })
-
-    const defaults = defaultData.map((i) => {
-      const { id } = i
-      const existed = data.find((j) => j.id === id)
-      return {
-        ...i,
-        disable: existed?.disable ?? false
-      }
-    })
-    return [...defaults, ...custom]
+    return getMergedData(data)
   }, [data])
 
   React.useEffect(() => {
@@ -167,8 +149,13 @@ const Card = (props) => {
         }
       )}>
       <div className="flex items-center flex-1 overflow-auto">
-        <div className="w-8 h-8 min-w-6 min-h-6">
-          <Img className="w-full h-full rounded-md" src={iconUrl} alt="" />
+        <div className="w-6 h-6 min-w-6 min-h-6">
+          <Img
+            className={classnames("w-full h-full rounded-md", {
+              "filter grayscale": disable
+            })}
+            src={iconUrl}
+          />
         </div>
         <a
           target="_blank"

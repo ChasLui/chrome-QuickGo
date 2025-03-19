@@ -1,9 +1,9 @@
 import { Storage } from "@plasmohq/storage"
 
 import {
-  defaultData,
   ga,
   GaEvents,
+  getMergedData,
   StorageKeys,
   type DataSourceItem
 } from "~utils"
@@ -63,10 +63,16 @@ function setupNavigationListeners() {
     const { hostname, pathname, searchParams } = urlObj
     if (!hostname) return
 
-    const data = await storage.get(StorageKeys.DATA_SOURCE)
-    const dataSource = (data as unknown as DataSourceItem[]) || defaultData
-    const matchUrl = pathname ? `${hostname}${pathname}` : hostname
-    const item = dataSource.find((i) => i.matchUrl === matchUrl)
+    const data = await storage.get<DataSourceItem[]>(StorageKeys.DATA_SOURCE)
+    const dataSource = getMergedData(data)
+    const currentUrl = pathname ? `${hostname}${pathname}` : hostname
+    const item = dataSource.find((i) => {
+      return (
+        i.matchUrl === currentUrl ||
+        `${i.matchUrl}/` === currentUrl ||
+        `www.${i.matchUrl}` === currentUrl
+      )
+    })
 
     if (!item || item.disable || !url.includes(item.redirectKey)) return
 

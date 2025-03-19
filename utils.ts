@@ -1,5 +1,8 @@
+import csdn from "data-base64:~assets/csdn-fav.ico"
+import gitee from "data-base64:~assets/gitee-fav.ico"
 import jianshu from "data-base64:~assets/jianshu-fav.ico"
 import juejin from "data-base64:~assets/juejin-fav.png"
+import sspai from "data-base64:~assets/sspai-fav.ico"
 import zhihu from "data-base64:~assets/zhihu-fav.ico"
 
 export enum StorageKeys {
@@ -8,30 +11,60 @@ export enum StorageKeys {
 }
 
 export const faviconMap = {
+  csdn,
+  sspai,
   zhihu,
+  gitee,
   juejin,
   jianshu
 }
 
 export const defaultData = [
   {
+    // https://link.zhihu.com/?target=https%3A//manus.im/
     id: "zhihu",
-    matchUrl: "link.zhihu.com/",
+    matchUrl: "link.zhihu.com",
     redirectKey: "target",
     disable: false,
     isDefault: true
   },
   {
+    // https://link.juejin.cn/?target=https%3A%2F%2Fcodesandbox.io%2Fp%2Fsandbox%2Fxwxsv6
     id: "juejin",
-    matchUrl: "link.juejin.cn/",
+    matchUrl: "link.juejin.cn",
     redirectKey: "target",
     disable: false,
     isDefault: true
   },
   {
+    // https://www.jianshu.com/go-wild?ac=2&url=https%3A%2F%2Fwww.runoob.com%2Fjs%2Fjs-intro.html
     id: "jianshu",
-    matchUrl: "www.jianshu.com/go-wild",
+    matchUrl: "jianshu.com/go-wild",
     redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://gitee.com/link?target=https%3A%2F%2Fnano.hyperf.wiki
+    id: "gitee",
+    matchUrl: "gitee.com/link",
+    redirectKey: "target",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://link.csdn.net/?from_id=145825938&target=https%3A%2F%2Fgithub.com%2Fyour-repo%2Fcompression-template
+    id: "csdn",
+    matchUrl: "link.csdn.net",
+    redirectKey: "target",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://sspai.com/link?target=https%3A%2F%2Fwww.digitalocean.com%2Fcommunity%2Ftools%2Fnginx%3Fglobal.app.lang%3DzhCN
+    id: "sspai",
+    matchUrl: "sspai.com/link",
+    redirectKey: "target",
     disable: false,
     isDefault: true
   }
@@ -117,4 +150,20 @@ export function getTopLevelDomain(url: string) {
     console.error("Invalid URL:", error)
     return null
   }
+}
+
+export const getMergedData = (storageData = []) => {
+  const custom = storageData.filter((i) => {
+    return !defaultData.find((j) => j.id === i.id)
+  })
+
+  const defaults = defaultData.map((i) => {
+    const { id } = i
+    const existed = storageData.find((j) => j.id === id)
+    return {
+      ...i,
+      disable: existed?.disable ?? false
+    }
+  })
+  return [...defaults, ...custom]
 }
