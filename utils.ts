@@ -1,9 +1,9 @@
-import csdn from "data-base64:~assets/csdn-fav.ico"
-import gitee from "data-base64:~assets/gitee-fav.ico"
-import jianshu from "data-base64:~assets/jianshu-fav.ico"
-import juejin from "data-base64:~assets/juejin-fav.png"
-import sspai from "data-base64:~assets/sspai-fav.ico"
-import zhihu from "data-base64:~assets/zhihu-fav.ico"
+import csdn from "data-base64:~assets/csdn.svg"
+import gitee from "data-base64:~assets/gitee.svg"
+import jianshu from "data-base64:~assets/jianshu.svg"
+import juejin from "data-base64:~assets/juejin.svg"
+import sspai from "data-base64:~assets/sspai.svg"
+import zhihu from "data-base64:~assets/zhihu.svg"
 
 export enum StorageKeys {
   DATA_SOURCE = "DATA_SOURCE",
