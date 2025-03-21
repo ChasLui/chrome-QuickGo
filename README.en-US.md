@@ -14,38 +14,47 @@
 
 <div align="center">
 
-[Chrome Web Store](https://chromewebstore.google.com/detail/quickgo/homllehcipjgpbpepcojhgcpfdopjhml) Get rid of website security redirect restrictions for smoother access.
+[Chrome Web Store](https://chromewebstore.google.com/detail/quickgo/homllehcipjgpbpepcojhgcpfdopjhml) QuickGo Direct Links — Automatically bypass security redirects on Zhihu, Jianshu, Juejin, CSDN, SSPAI, Gitee, and more.
 
-[Simplified Chinese](https://github.com/Dolov/chrome-QuickGo/blob/main/README.md) | English
+English | [Simplified Chinese](https://github.com/Dolov/chrome-QuickGo/blob/main/README.md)
 
 </div>
 
-### Features
+### 🚀 Features
 
-Many websites have security redirects when accessing external addresses, which can be very time-consuming. This extension can skip security interceptions and quickly access the target URL.
+Do you find it frustrating when clicking external links on Zhihu, CSDN, Juejin, Jianshu, and similar sites, only to be redirected to a "Security Center" page before proceeding? 😩
 
-- Supports address configuration.
-- Supports theme configuration.
+No worries! **QuickGo** 🏎️ is here to help! It **automatically bypasses these annoying security redirects and takes you directly to your target page**—making your browsing experience smoother, faster, and hassle-free! 💨 **Go anywhere instantly without extra clicks!** 🎯
 
-### Instructions
+✨ **Key Features**:
 
-1. When a security redirect occurs on a site, click the extension icon, and an extension page will pop up on the right side of the page.
-2. Click the create button, and a pop-up box will appear.
-3. Enter the current website address in the pop-up box (usually no need to fill in, there is a default value)
-4. Enter the redirection parameter name in the pop-up box, you can observe the address bar (if it is target or url, it will automatically fill in)
-5. Save and refresh the page
+- 📦 **Ready to use** — Supports instant redirection on Zhihu, Jianshu, Juejin, CSDN, SSPAI, Gitee, and more. No extra steps required!
+- 🎨 **Beautiful UI** — Multiple themes available for a personalized browsing experience!
+- ✏️ **Custom Rules** — Manually add support for sites that aren’t yet included!
+- 🖱️ **Simple & Efficient** — No complex setup needed. Install and enjoy seamless browsing! 🚀
 
-### Example
+### 🛠️ Custom Rules Guide
 
-![img](./screenshots/WX20240629-150546@2x.png)
+Easily bypass security redirects in just a few steps!👇
 
-### Welcome
+1️⃣ When a security redirect occurs on a site, **click the extension icon**, and a settings window will appear on the right side of the page.  
+2️⃣ Click the **"Create"** button to open a settings pop-up.  
+3️⃣ Enter the **current website address** in the pop-up (usually auto-filled, so no manual input needed).  
+4️⃣ Enter the **redirection parameter name**, which can be found in the URL (usually auto-filled as well. If not, check the address bar—common values are `target` or `url`).  
+5️⃣ **Save and refresh the page** for instant effect! 🚀
 
-If you encounter problems during use or have new feature requests, you can provide feedback in the issues.
+![img](./screenshots/theme1.png)  
+![img](./screenshots/theme2.png)
 
-### Development Build
+### 🎉 Welcome to QuickGo
 
-1. Install Node.js https://nodejs.org/en/download/package-manager
-2. npm i
-3. npm build
-4. npm package
+If you encounter any issues or have feature requests, feel free to submit feedback in **issues**. We’ll be happy to assist you! 🚀
+
+### 🛠️ Development & Build Guide
+
+1️⃣ **Install Node.js** 👉 [Download here](https://nodejs.org/en/download/package-manager)  
+2️⃣ **Install dependencies**: `npm i`  
+3️⃣ **Build the project**: `npm build`  
+4️⃣ **Package the extension**: `npm package`
+
+💡 Get started quickly and contribute your ideas to make QuickGo even better! 🎯
