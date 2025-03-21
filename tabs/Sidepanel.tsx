@@ -159,7 +159,9 @@ const Card = (props) => {
         </div>
         <a
           target="_blank"
-          className="link font-bold ml-3 text-sm ellipsis"
+          className={classnames("link font-bold ml-3 text-sm ellipsis", {
+            "line-through": disable
+          })}
           onClick={(e) => handleClickUrl(e, item)}>
           {matchUrl}
         </a>
