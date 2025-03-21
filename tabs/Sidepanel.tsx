@@ -49,6 +49,7 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
   }
 
   const handleEdit = (item: DataSourceItem) => {
+    if (item.isDefault) return
     ga(GaEvents.ITEM_EDIT)
     editRef.current = item
     setCreateVisible(true)
