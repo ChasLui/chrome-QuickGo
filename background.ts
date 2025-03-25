@@ -66,20 +66,28 @@ function setupNavigationListeners() {
     const data = await storage.get<DataSourceItem[]>(StorageKeys.DATA_SOURCE)
     const dataSource = getMergedData(data)
     const currentUrl = pathname ? `${hostname}${pathname}` : hostname
+    console.log("currentUrl: ", currentUrl)
+
     const item = dataSource.find((i) => {
       return (
         i.matchUrl === currentUrl ||
         `${i.matchUrl}/` === currentUrl ||
-        `www.${i.matchUrl}` === currentUrl
+        `www.${i.matchUrl}` === currentUrl ||
+        `www.${i.matchUrl}/` === currentUrl
       )
     })
 
+    console.log("item: ", item)
     if (!item || item.disable || !url.includes(item.redirectKey)) return
-
+    const { decode } = item
     const redirectUrl = searchParams.get(item.redirectKey)
-    if (redirectUrl) {
-      ga(GaEvents.REDIRECT)
-      chrome.tabs.update(tabId, { url: redirectUrl })
+    console.log("redirectUrl: ", redirectUrl)
+    if (!redirectUrl) return
+    ga(GaEvents.REDIRECT)
+    const decodeUrl = decode ? decodeURIComponent(redirectUrl) : redirectUrl
+    console.log("decodeUrl: ", decodeUrl)
+    if (decodeUrl.includes("://")) {
+      chrome.tabs.update(tabId, { url: decodeUrl })
     }
   }
 

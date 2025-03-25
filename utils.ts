@@ -1,4 +1,11 @@
+import afdian from "data-base64:~assets/afdian.svg"
+import aliyun from "data-base64:~assets/aliyun.svg"
+import bilibili from "data-base64:~assets/bilibili.svg"
+import chinaz from "data-base64:~assets/chinaz.svg"
+import coolapk from "data-base64:~assets/coolapk.svg"
 import csdn from "data-base64:~assets/csdn.svg"
+import curseforge from "data-base64:~assets/curseforge.svg"
+import douban from "data-base64:~assets/douban.svg"
 import gitee from "data-base64:~assets/gitee.svg"
 import jianshu from "data-base64:~assets/jianshu.svg"
 import juejin from "data-base64:~assets/juejin.svg"
@@ -16,7 +23,14 @@ export const faviconMap = {
   zhihu,
   gitee,
   juejin,
-  jianshu
+  jianshu,
+  afdian,
+  chinaz,
+  coolapk,
+  curseforge,
+  aliyun,
+  douban,
+  bilibili
 }
 
 export const defaultData = [
@@ -67,6 +81,78 @@ export const defaultData = [
     redirectKey: "target",
     disable: false,
     isDefault: true
+  },
+  {
+    // https://afdian.com/link?target=https%3A%2F%2Flarkcommunity.feishu.cn%2Fbase%2FM2gsbZmBtaHyagsOtbrca2c2nvh
+    id: "afdian",
+    matchUrl: "afdian.com/link",
+    redirectKey: "target",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.baike.com/redirect_link?url=https%3A%2F%2Fwww.zdnet.com%2Farticle%2Fgithub-builds-a-search-engine-for-code-from-scratch-in-rust%2F&collect_params=%7B%22doc_title%22%3A%22github%22%2C%22doc_id%22%3A%227239981009876418592%22%2C%22version_id%22%3A%227473689138244403212%22%2C%22reference_type%22%3A%22web%22%2C%22link%22%3A%22https%3A%2F%2Fwww.zdnet.com%2Farticle%2Fgithub-builds-a-search-engine-for-code-from-scratch-in-rust%2F%22%2C%22author%22%3A%22%22%2C%22title%22%3A%22GitHubbuiltanewsearchengineforcode%27fromscratch%27inRust%22%2C%22reference_tag%22%3A%22%22%2C%22source_name%22%3A%22zdnet%22%2C%22publish_date%22%3A%22%22%2C%22translator%22%3A%22%22%2C%22volume%22%3A%22%22%2C%22period%22%3A%22%22%2C%22page%22%3A%22%22%2C%22doi%22%3A%22%22%2C%22version%22%3A%22%22%2C%22publish_area%22%3A%22%22%2C%22publisher%22%3A%22%22%2C%22book_number%22%3A%22%22%7D
+    id: "baike",
+    matchUrl: "baike.com/redirect_link",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://blzxteam.com/gowild.htm?url=https_3A_2F_2Fjq_2eqq_2ecom_2F_3F_5fwv_3D1027_26k_3D1ywspCt0&u=31468&fr=https_3A_2F_2Fblzxteam_2ecom_2Fthread_2d479_2ehtm
+    id: "blzxteam",
+    matchUrl: "blzxteam.com/gowild.htm",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.chinaz.com/go.shtml?url=https://mp.weixin.qq.com/s/vhv4Eb5XoA2d4LKRqVRQag
+    id: "chinaz",
+    matchUrl: "chinaz.com/go.shtml",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    id: "coolapk",
+    matchUrl: "coolapk.com/link",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.curseforge.com/linkout?remoteUrl=https%253a%252f%252fwww.complementary.dev%252fshaders%252f%2523download-section
+    id: "curseforge",
+    matchUrl: "curseforge.com/linkout",
+    redirectKey: "remoteUrl",
+    decode: true,
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://developer.aliyun.com/redirect?target=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "aliyun",
+    matchUrl: "developer.aliyun.com/redirect",
+    redirectKey: "target",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.douban.com/link2/?url=http%3A%2F%2Fwww.truecrypt.org%2F&link2key=c2b1b99b0b
+    id: "douban",
+    matchUrl: "douban.com/link2",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://game.bilibili.com/linkfilter/?url=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "bilibili",
+    matchUrl: "game.bilibili.com/linkfilter",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
   }
 ]
 
@@ -87,6 +173,7 @@ export interface DataSourceItem {
   disable: boolean
   matchUrl: string
   redirectKey: string
+  decode?: boolean
   isDefault?: boolean
 }
 

@@ -93,28 +93,21 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
     <div className="h-full flex flex-col">
       {noData && <img src={empty} alt="" />}
       <div className="flex-1 overflow-auto">
-        <div>
-          {dataSource.map((item) => {
-            const { id } = item
-            return (
-              <Card
-                key={id}
-                item={item}
-                handleEdit={handleEdit}
-                handleDelete={handleDelete}
-                handleDisable={handleDisable}
-                handleClickUrl={handleClickUrl}
-              />
-            )
-          })}
-        </div>
-        <button
-          onClick={handleCreate}
-          className="btn btn-sm btn-neutral btn-block">
-          {chrome.i18n.getMessage("create")}
-        </button>
+        {dataSource.map((item) => {
+          const { id } = item
+          return (
+            <Card
+              key={id}
+              item={item}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+              handleDisable={handleDisable}
+              handleClickUrl={handleClickUrl}
+            />
+          )
+        })}
       </div>
-      <Actions className="flex justify-end pt-4" />
+      <Actions handleCreate={handleCreate} />
       <Create
         onOk={handleCreateSave}
         visible={createVisible}
@@ -294,7 +287,7 @@ const Create = (props) => {
 }
 
 const Actions = (props) => {
-  const { className } = props
+  const { handleCreate } = props
 
   const handleIssue = () => {
     ga(GaEvents.ACTIONS_ISSUE)
@@ -312,22 +305,29 @@ const Actions = (props) => {
   }
 
   return (
-    <div className={className} onClick={(e) => e.stopPropagation()}>
-      <div
-        className="tooltip"
-        data-tip={chrome.i18n.getMessage("actions_issues")}>
-        <button onClick={handleIssue} className="btn btn-sm btn-circle mx-2">
-          <StreamlineEmojisBug className="text-xl" />
-        </button>
-      </div>
-      <div
-        className="tooltip"
-        data-tip={chrome.i18n.getMessage("actions_setting")}>
-        <button
-          onClick={handleSetting}
-          className="btn btn-sm btn-circle mx-2 group">
-          <MaterialSymbolsSettings className="text-xl group-hover:text-primary" />
-        </button>
+    <div className="flex items-center pt-4">
+      <button
+        onClick={handleCreate}
+        className="btn btn-sm btn-neutral btn-block flex-1">
+        {chrome.i18n.getMessage("create")}
+      </button>
+      <div className="flex">
+        <div
+          className="tooltip"
+          data-tip={chrome.i18n.getMessage("actions_issues")}>
+          <button onClick={handleIssue} className="btn btn-sm btn-circle mx-2">
+            <StreamlineEmojisBug className="text-xl" />
+          </button>
+        </div>
+        <div
+          className="tooltip"
+          data-tip={chrome.i18n.getMessage("actions_setting")}>
+          <button
+            onClick={handleSetting}
+            className="btn btn-sm btn-circle mx-2 group">
+            <MaterialSymbolsSettings className="text-xl group-hover:text-primary" />
+          </button>
+        </div>
       </div>
     </div>
   )
