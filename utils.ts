@@ -1,36 +1,6 @@
-import afdian from "data-base64:~assets/afdian.svg"
-import aliyun from "data-base64:~assets/aliyun.svg"
-import bilibili from "data-base64:~assets/bilibili.svg"
-import chinaz from "data-base64:~assets/chinaz.svg"
-import coolapk from "data-base64:~assets/coolapk.svg"
-import csdn from "data-base64:~assets/csdn.svg"
-import curseforge from "data-base64:~assets/curseforge.svg"
-import douban from "data-base64:~assets/douban.svg"
-import gitee from "data-base64:~assets/gitee.svg"
-import jianshu from "data-base64:~assets/jianshu.svg"
-import juejin from "data-base64:~assets/juejin.svg"
-import sspai from "data-base64:~assets/sspai.svg"
-import zhihu from "data-base64:~assets/zhihu.svg"
-
 export enum StorageKeys {
   DATA_SOURCE = "DATA_SOURCE",
   SETTINGS = "SETTINGS"
-}
-
-export const faviconMap = {
-  csdn,
-  sspai,
-  zhihu,
-  gitee,
-  juejin,
-  jianshu,
-  afdian,
-  chinaz,
-  coolapk,
-  curseforge,
-  aliyun,
-  douban,
-  bilibili
 }
 
 export const defaultData = [
@@ -150,6 +120,54 @@ export const defaultData = [
     // https://game.bilibili.com/linkfilter/?url=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
     id: "bilibili",
     matchUrl: "game.bilibili.com/linkfilter",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://ref.gamer.com.tw/redir.php?url=http%3A%2F%2Fsunderfolk.com%2F
+    id: "refgamer",
+    matchUrl: "ref.gamer.com.tw/redir.php",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.gcores.com/link?target=https%3A%2F%2Fals.rjsy313.com%2F
+    id: "gcores",
+    matchUrl: "gcores.com/link",
+    redirectKey: "target",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://hellogithub.com/periodical/statistics/click?target=https%3A%2F%2Fals.rjsy313.com%2F
+    id: "hellogithub",
+    matchUrl: "hellogithub.com/periodical/statistics/click",
+    redirectKey: "target",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://xie.infoq.cn/link?target=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg5MjU0NTI5OQ%3D%3D%26mid%3D2247604333%26idx%3D1%26sn%3D4021da1c6fb035906fd747487bbb8a23%26scene%3D21%23wechat_redirect
+    id: "xieinfoq",
+    matchUrl: "xie.infoq.cn/link",
+    redirectKey: "target",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.infoq.cn/link?target=https%3A%2F%2Fsloanreview.mit.edu%2Farticle%2Fmanaging-the-bots-that-are-managing-the-business%2F
+    id: "infoq",
+    matchUrl: "infoq.cn/link",
+    redirectKey: "target",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.kookapp.cn/go-wild.html?url=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "kookapp",
+    matchUrl: "kookapp.cn/go-wild.html",
     redirectKey: "url",
     disable: false,
     isDefault: true

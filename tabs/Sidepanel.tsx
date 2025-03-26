@@ -9,7 +9,6 @@ import { MaterialSymbolsSettings, StreamlineEmojisBug } from "~components/Icons"
 import Img from "~components/Img"
 import Modal from "~components/Modal"
 import {
-  faviconMap,
   ga,
   GaEvents,
   getMergedData,
@@ -17,6 +16,7 @@ import {
   StorageKeys,
   type DataSourceItem
 } from "~utils"
+import { faviconMap } from "~utils/favicons"
 
 import "~tailwind.less"
 
