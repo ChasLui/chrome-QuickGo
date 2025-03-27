@@ -12,11 +12,11 @@ import {
   ga,
   GaEvents,
   getMergedData,
-  getTopLevelDomain,
   StorageKeys,
   type DataSourceItem
 } from "~utils"
-import { faviconMap } from "~utils/favicons"
+import { domainFaviconMap } from "~utils/favicons"
+import { getDomain } from "~utils/index"
 
 import "~tailwind.less"
 
@@ -125,9 +125,9 @@ const Card = (props) => {
   const { item, handleClickUrl, handleDisable, handleDelete, handleEdit } =
     props
 
-  const { matchUrl, disable, isDefault, id } = item as DataSourceItem
-  const favicon = faviconMap[id]
-  const domain = getTopLevelDomain(matchUrl)
+  const { matchUrl, disable, isDefault } = item as DataSourceItem
+  const domain = getDomain(matchUrl)
+  const favicon = domainFaviconMap[domain]
   const iconUrl =
     favicon || `https://www.faviconextractor.com/favicon/${domain}`
 

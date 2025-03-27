@@ -126,7 +126,7 @@ export const defaultData = [
   },
   {
     // https://ref.gamer.com.tw/redir.php?url=http%3A%2F%2Fsunderfolk.com%2F
-    id: "refgamer",
+    id: "gamercomtw",
     matchUrl: "ref.gamer.com.tw/redir.php",
     redirectKey: "url",
     disable: false,
@@ -245,30 +245,27 @@ export const ga = async (name, params?: Record<string, any>) => {
   )
 }
 
-export function getTopLevelDomain(url: string) {
-  try {
-    const newUrl = url.startsWith("http") ? url : `http://${url}`
-    const hostname = new URL(newUrl).hostname
-    const parts = hostname.split(".")
-    return parts.length > 1 ? parts.slice(-2).join(".") : hostname
-  } catch (error) {
-    console.error("Invalid URL:", error)
-    return null
-  }
-}
-
 export const getMergedData = (storageData = []) => {
-  const custom = storageData.filter((i) => {
-    return !defaultData.find((j) => j.id === i.id)
+  // 使用 Map 来加速查找 defaultData
+  const defaultDataMap = new Map(defaultData.map((item) => [item.id, item]))
+
+  // 过滤出 storageData 中没有的项
+  const newDefaultData = defaultData.filter((item) => {
+    return !storageData.some((cItem) => cItem.id === item.id)
   })
 
-  const defaults = defaultData.map((i) => {
-    const { id } = i
-    const existed = storageData.find((j) => j.id === id)
-    return {
-      ...i,
-      disable: existed?.disable ?? false
+  // 根据 storageData 更新每项数据，保持顺序不变
+  const newStorageData = storageData.map((item) => {
+    const defaultItem = defaultDataMap.get(item.id)
+    if (defaultItem) {
+      return {
+        ...defaultItem,
+        disable: item.disable ?? false
+      }
     }
+    return item
   })
-  return [...defaults, ...custom]
+
+  // 合并 storageData 和 newDefaultData，确保顺序
+  return [...newStorageData, ...newDefaultData]
 }
