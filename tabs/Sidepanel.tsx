@@ -8,15 +8,15 @@ import { useThemeChange } from "~components/hooks"
 import { MaterialSymbolsSettings, StreamlineEmojisBug } from "~components/Icons"
 import Img from "~components/Img"
 import Modal from "~components/Modal"
+import { domainFaviconMap } from "~utils/favicons"
+import { getDomain } from "~utils/index"
 import {
   ga,
   GaEvents,
   getMergedData,
   StorageKeys,
   type DataSourceItem
-} from "~utils"
-import { domainFaviconMap } from "~utils/favicons"
-import { getDomain } from "~utils/index"
+} from "~utils/pure"
 
 import "~tailwind.less"
 
@@ -125,7 +125,7 @@ const Card = (props) => {
   const { item, handleClickUrl, handleDisable, handleDelete, handleEdit } =
     props
 
-  const { matchUrl, disable, isDefault } = item as DataSourceItem
+  const { matchUrl, disable, isDefault, count } = item as DataSourceItem
   const domain = getDomain(matchUrl)
   const favicon = domainFaviconMap[domain]
   const iconUrl =
@@ -136,7 +136,7 @@ const Card = (props) => {
       role="alert"
       onClick={() => handleEdit(item)}
       className={classnames(
-        "alert flex mb-3 justify-between overflow-hidden cursor-pointer",
+        "alert flex mb-2 justify-between overflow-hidden py-3",
         {
           "bg-base-300": disable,
           "hover:shadow-xl": !disable
@@ -160,7 +160,14 @@ const Card = (props) => {
           {matchUrl}
         </a>
       </div>
-      <div className="flex flex-nowrap" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="flex flex-nowrap items-center"
+        onClick={(e) => e.stopPropagation()}>
+        {!!count && (
+          <div className="badge badge-sm badge-ghost mr-2 bg-base-300">
+            {count.toLocaleString()}
+          </div>
+        )}
         {!disable && (
           <button
             onClick={() => handleDisable(item)}

@@ -2,7 +2,7 @@ import React from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
-import { ga, GaEvents, StorageKeys } from "~utils"
+import { ga, GaEvents, StorageKeys } from "~utils/pure"
 
 export const useBoolean = (defaultValue = false) => {
   const [value, setValue] = React.useState(defaultValue)

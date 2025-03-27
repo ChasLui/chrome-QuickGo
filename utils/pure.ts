@@ -96,7 +96,6 @@ export const defaultData = [
     id: "curseforge",
     matchUrl: "curseforge.com/linkout",
     redirectKey: "remoteUrl",
-    decode: true,
     disable: false,
     isDefault: true
   },
@@ -190,9 +189,11 @@ export interface DataSourceItem {
   id: string
   disable: boolean
   matchUrl: string
-  redirectKey: string
-  decode?: boolean
+  // 生效的次数
+  count?: number
+  // 是否是默认数据，用于区分用户自定义数据，不可删除，不可编辑
   isDefault?: boolean
+  redirectKey: string
 }
 
 export function formatDateTime() {
@@ -260,6 +261,7 @@ export const getMergedData = (storageData = []) => {
     if (defaultItem) {
       return {
         ...defaultItem,
+        count: item.count ?? 0,
         disable: item.disable ?? false
       }
     }

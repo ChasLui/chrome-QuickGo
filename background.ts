@@ -6,7 +6,7 @@ import {
   getMergedData,
   StorageKeys,
   type DataSourceItem
-} from "~utils"
+} from "~utils/pure"
 
 const storage = new Storage()
 
@@ -60,13 +60,13 @@ function setupContextMenuListeners(menuList: MenuItem[]) {
 function setupNavigationListeners() {
   const handleNavigation = async (url: string, tabId: number) => {
     const urlObj = new URL(url)
-    const { hostname, pathname, searchParams } = urlObj
+    const { origin, hostname, pathname, searchParams } = urlObj
     if (!hostname) return
+    if (origin === "chrome://newtab") return
 
     const data = await storage.get<DataSourceItem[]>(StorageKeys.DATA_SOURCE)
     const dataSource = getMergedData(data)
     const currentUrl = pathname ? `${hostname}${pathname}` : hostname
-    console.log("currentUrl: ", currentUrl)
 
     const item = dataSource.find((i) => {
       return (
@@ -77,30 +77,46 @@ function setupNavigationListeners() {
       )
     })
 
-    console.log("item: ", item)
     if (!item || item.disable || !url.includes(item.redirectKey)) return
-    const { decode } = item
-    const redirectUrl = searchParams.get(item.redirectKey)
-    console.log("redirectUrl: ", redirectUrl)
+
+    const { redirectKey } = item
+    const redirectUrl = searchParams.get(redirectKey)
     if (!redirectUrl) return
-    ga(GaEvents.REDIRECT)
-    const decodeUrl = decode ? decodeURIComponent(redirectUrl) : redirectUrl
-    console.log("decodeUrl: ", decodeUrl)
+    const decodeUrl = decodeURIComponent(redirectUrl)
     if (decodeUrl.includes("://")) {
+      ga(GaEvents.REDIRECT)
+      // 将生效的规则放到第一位，计数+1
+      const newDataSource = [
+        { ...item, count: item.count ? item.count + 1 : 1 },
+        ...dataSource.filter((i) => i.id !== item.id)
+      ]
       chrome.tabs.update(tabId, { url: decodeUrl })
+      storage.set(StorageKeys.DATA_SOURCE, newDataSource)
     }
   }
 
-  chrome.webNavigation.onCommitted.addListener((details) => {
-    if (details.transitionType === "reload") {
-      handleNavigation(details.url, details.tabId)
-    }
+  // chrome.webNavigation.onCommitted.addListener((details) => {
+  //   if (details.transitionType === "reload") {
+  //     handleNavigation(details.url, details.tabId)
+  //   }
+  // })
+
+  // chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  //   if (changeInfo.status === "loading" && changeInfo.url) {
+  //     handleNavigation(changeInfo.url, tabId)
+  //   }
+  // })
+
+  chrome.webNavigation.onBeforeNavigate.addListener((details) => {
+    const { url, tabId } = details
+    console.log("onBeforeNavigate: ", url)
+    handleNavigation(url, tabId)
   })
 
-  chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (changeInfo.status === "loading" && changeInfo.url) {
-      handleNavigation(changeInfo.url, tabId)
-    }
+  chrome.tabs.onCreated.addListener((tab) => {
+    const { id, pendingUrl } = tab
+    console.log("onCreated: ", pendingUrl)
+    handleNavigation(pendingUrl, id)
   })
 }
 
