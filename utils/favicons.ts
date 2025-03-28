@@ -14,6 +14,7 @@ import infoq from "data-base64:~assets/infoq.svg"
 import jianshu from "data-base64:~assets/jianshu.svg"
 import juejin from "data-base64:~assets/juejin.svg"
 import kookapp from "data-base64:~assets/kookapp.svg"
+import latexstudio from "data-base64:~assets/latexstudio.svg"
 import sspai from "data-base64:~assets/sspai.svg"
 import zhihu from "data-base64:~assets/zhihu.svg"
 
@@ -37,5 +38,6 @@ export const domainFaviconMap = {
   "gcores.com": gcores,
   "hellogithub.com": hellogithub,
   "infoq.cn": infoq,
-  "kookapp.cn": kookapp
+  "kookapp.cn": kookapp,
+  "latexstudio.net": latexstudio
 }

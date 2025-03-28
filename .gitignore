@@ -35,3 +35,4 @@ dist/
 .tsbuildinfo
 
 .test.js
+.server.js

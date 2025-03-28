@@ -95,27 +95,41 @@ function setupNavigationListeners() {
     }
   }
 
+  // 刷新页面时 onBeforeNavigate > onCommitted，onBeforeNavigate 无需等待 TTFB
+  // 新建标签页时 onCreated > onUpdated > onBeforeNavigate，onCreated 无需等待 TTFB
+
   // chrome.webNavigation.onCommitted.addListener((details) => {
   //   if (details.transitionType === "reload") {
+  //     console.log("onCommitted: ", Date.now())
   //     handleNavigation(details.url, details.tabId)
   //   }
   // })
 
   // chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   //   if (changeInfo.status === "loading" && changeInfo.url) {
+  //     console.log("onUpdated: ", Date.now())
   //     handleNavigation(changeInfo.url, tabId)
   //   }
   // })
 
+  const createTabRef = {
+    id: null
+  }
+
   chrome.webNavigation.onBeforeNavigate.addListener((details) => {
     const { url, tabId } = details
-    console.log("onBeforeNavigate: ", url)
+    if (createTabRef.id === tabId) {
+      createTabRef.id = null
+      return
+    }
+    console.log("onBeforeNavigate: ", tabId, Date.now(), url)
     handleNavigation(url, tabId)
   })
 
   chrome.tabs.onCreated.addListener((tab) => {
     const { id, pendingUrl } = tab
-    console.log("onCreated: ", pendingUrl)
+    createTabRef.id = id
+    console.log("onCreated: ", id, Date.now(), pendingUrl)
     handleNavigation(pendingUrl, id)
   })
 }

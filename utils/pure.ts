@@ -170,6 +170,14 @@ export const defaultData = [
     redirectKey: "url",
     disable: false,
     isDefault: true
+  },
+  {
+    // https://ask.latexstudio.net/go/index?url=https%3A%2F%2Fgithub.com%2Fzepinglee%2Fciteproc-lua
+    id: "latexstudio",
+    matchUrl: "ask.latexstudio.net/go/index",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
   }
 ]
 
