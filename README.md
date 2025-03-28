@@ -22,23 +22,17 @@
 
 ### 🚀 功能亮点
 
-✨ **`chrome.tabs.onCreated` & `chrome.webNavigation.onBeforeNavigate`** ✨
-
-💡 **<span style="font-size: 1.2em; color: #FF5733; background-color: #FFF3CD; padding: 4px 8px; border-radius: 6px;">无需等待页面加载，在创建 tab 时即刻拦截并重定向！</span>**
-
-🚀 **<span style="font-size: 1.3em; color: #007BFF; background-color: #E3F2FD; padding: 4px 8px; border-radius: 6px;">畅通无阻，速度拉满！</span>**
-
 你是否在知乎、CSDN、掘金、简书等网站上点击外链时，总是被拦截到“安全中心”，还得多点一次才能继续？是不是觉得太麻烦了？😩
 
 别担心，**QuickGo** 🏎️ 来帮你！它能 **自动绕过繁琐跳转，无感直达目标页面**，让你的浏览体验更加丝滑，省时又省心！💨 **想去哪就去哪，畅行无阻！快人一步，从此告别多余点击！** 🎯
 
 ✨ **核心功能**：
 
-- ⚡ **极速跳转，无感直达**，基于 `onCreated` & `onBeforeNavigate` API，**拦截即重定向，无需等待页面加载！**
-- 📦 **即装即用**，支持知乎、简书、掘金、CSDN、少数派、Gitee 等网站**智能跳转**，无需额外操作！
-- 🎨 **个性化 UI 体验**，多款主题随心切换，打造**专属浏览风格！**
-- ✏️ **自定义跳转规则**，支持手动添加未适配网站，**自由掌控跳转路径！**
-- 🖱️ **极简操作，开箱即用**，安装即生效，**顺畅直达目标，告别繁琐点击！** 🚀
+- ⚡ **极速跳转**，使用更快的 onCreated & onBeforeNavigate API 。
+- 📦 **即装即用**，支持知乎、简书、掘金、CSDN、少数派、Gitee 等网站的自动跳转！
+- 🎨 **精美 UI**，多款主题随心切换，打造个性化浏览体验！
+- ✏️ **自定义规则**，支持手动添加未适配网站，让你自由掌控跳转路径！
+- 🖱️ **极简操作**，无需复杂设置，安装即生效，顺畅直达目标！
 
 ### 🛠️ 自定义规则指南
 
