@@ -136,7 +136,7 @@ const Card = (props) => {
       role="alert"
       onClick={() => handleEdit(item)}
       className={classnames(
-        "alert flex mb-2 justify-between overflow-hidden py-3",
+        "alert flex mb-2 justify-between overflow-hidden py-3 group",
         {
           "bg-base-300": disable,
           "hover:shadow-xl": !disable
@@ -163,23 +163,12 @@ const Card = (props) => {
       <div
         className="flex flex-nowrap items-center"
         onClick={(e) => e.stopPropagation()}>
-        {!!count && (
-          <div className="badge badge-sm badge-ghost mr-2 bg-base-300">
-            {count.toLocaleString()}
-          </div>
-        )}
-        {!disable && (
-          <button
-            onClick={() => handleDisable(item)}
-            className="btn btn-xs btn-accent">
-            {chrome.i18n.getMessage("disable")}
-          </button>
-        )}
-        {disable && (
-          <button onClick={() => handleDisable(item)} className="btn btn-xs">
-            {chrome.i18n.getMessage("enable")}
-          </button>
-        )}
+        <Count count={count} className="group-hover:hidden" />
+        <EnableButton
+          item={item}
+          handleDisable={handleDisable}
+          className="hidden group-hover:block"
+        />
         {!isDefault && (
           <button
             onClick={() => handleDelete(item)}
@@ -188,6 +177,41 @@ const Card = (props) => {
           </button>
         )}
       </div>
+    </div>
+  )
+}
+
+const EnableButton = (props) => {
+  const { item, handleDisable, className } = props
+  const { disable } = item as DataSourceItem
+
+  const text = disable
+    ? chrome.i18n.getMessage("enable")
+    : chrome.i18n.getMessage("disable")
+
+  return (
+    <button
+      onClick={() => handleDisable(item)}
+      className={classnames("btn btn-xs", className, {
+        "btn-accent": !disable
+      })}>
+      {text}
+    </button>
+  )
+}
+
+const Count = (props) => {
+  const { count, className } = props
+
+  if (!count) return null
+
+  return (
+    <div
+      className={classnames(
+        "badge badge-sm badge-ghost mr-2 bg-base-300 font-bold italic",
+        className
+      )}>
+      {count.toLocaleString()}
     </div>
   )
 }
