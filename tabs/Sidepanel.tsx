@@ -125,8 +125,9 @@ const Card = (props) => {
   const { item, handleClickUrl, handleDisable, handleDelete, handleEdit } =
     props
 
-  const { matchUrl, disable, isDefault, count } = item as DataSourceItem
-  const domain = getDomain(matchUrl)
+  const { matchUrl, disable, isDefault, count, hostIcon } =
+    item as DataSourceItem
+  const domain = getDomain(matchUrl, hostIcon)
   const favicon = domainFaviconMap[domain]
   const iconUrl =
     favicon || `https://www.faviconextractor.com/favicon/${domain}`
@@ -145,7 +146,7 @@ const Card = (props) => {
       <div className="flex items-center flex-1 overflow-auto">
         <div className="w-6 h-6 min-w-6 min-h-6">
           <Img
-            className={classnames("w-full h-full rounded-md", {
+            className={classnames("w-full h-full rounded-md object-contain", {
               "filter grayscale": disable
             })}
             src={iconUrl}

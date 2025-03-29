@@ -178,6 +178,71 @@ export const defaultData = [
     redirectKey: "url",
     disable: false,
     isDefault: true
+  },
+  {
+    // https://leetcode.cn/link/?target=https%3A%2F%2Fjobs.mihoyo.com%2Fm%2F%3FsharePageId%3D77920%26recommendationCode%3DGZRRW%26isRecommendation%3Dtrue%23%2Fcampus%2Fposition
+    id: "leetcode",
+    matchUrl: "leetcode.cn/link",
+    redirectKey: "target",
+    disable: false,
+    isDefault: true
+  },
+  {
+    id: "linkedin",
+    matchUrl: "linkedin.com/safety/go",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://link.logonews.cn/?url=http%3A%2F%2Fsunderfolk.com%2F
+    id: "logonews",
+    matchUrl: "link.logonews.cn",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.nodeseek.com/jump?to=https%3A%2F%2Fblogverse.cn
+    id: "nodeseek",
+    matchUrl: "nodeseek.com/jump",
+    redirectKey: "to",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://hd.nowcoder.com/link.html?target=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "nowcoder",
+    matchUrl: "hd.nowcoder.com/link.html",
+    redirectKey: "target",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.oschina.net/action/GoToLink?url=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "oschina",
+    matchUrl: "oschina.net/action/GoToLink",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.qcc.com/web/transfer-link?link=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "qcc",
+    matchUrl: "qcc.com/web/transfer-link",
+    redirectKey: "link",
+    disable: false,
+    isDefault: true
+  },
+
+  {
+    // https://docs.qq.com/scenario/link.html?url=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "docsqq",
+    hostIcon: true,
+    matchUrl: "docs.qq.com/scenario/link.html",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
   }
 ]
 
@@ -197,6 +262,8 @@ export interface DataSourceItem {
   id: string
   disable: boolean
   matchUrl: string
+  // 使用 hostname 的图标
+  hostIcon?: boolean
   // 生效的次数
   count?: number
   // 是否是默认数据，用于区分用户自定义数据，不可删除，不可编辑

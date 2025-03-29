@@ -1,7 +1,10 @@
 import { parse as tldtsParse } from "tldts"
 
-export function getDomain(url: string) {
+export function getDomain(url: string, hostname) {
   if (!url) return
   const parmas = tldtsParse(url)
+  if (hostname) {
+    return parmas.hostname
+  }
   return parmas.domain
 }

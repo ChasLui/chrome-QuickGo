@@ -5,6 +5,7 @@ import chinaz from "data-base64:~assets/chinaz.svg"
 import coolapk from "data-base64:~assets/coolapk.svg"
 import csdn from "data-base64:~assets/csdn.svg"
 import curseforge from "data-base64:~assets/curseforge.svg"
+import docsqq from "data-base64:~assets/docsqq.svg"
 import douban from "data-base64:~assets/douban.svg"
 import gamercomtw from "data-base64:~assets/gamercomtw.svg"
 import gcores from "data-base64:~assets/gcores.svg"
@@ -15,6 +16,11 @@ import jianshu from "data-base64:~assets/jianshu.svg"
 import juejin from "data-base64:~assets/juejin.svg"
 import kookapp from "data-base64:~assets/kookapp.svg"
 import latexstudio from "data-base64:~assets/latexstudio.svg"
+import leetcode from "data-base64:~assets/leetcode.svg"
+import linkedin from "data-base64:~assets/linkedin.svg"
+import logonews from "data-base64:~assets/logonews.svg"
+import oschina from "data-base64:~assets/oschina.svg"
+import qcc from "data-base64:~assets/qcc.svg"
 import sspai from "data-base64:~assets/sspai.svg"
 import zhihu from "data-base64:~assets/zhihu.svg"
 
@@ -39,5 +45,11 @@ export const domainFaviconMap = {
   "hellogithub.com": hellogithub,
   "infoq.cn": infoq,
   "kookapp.cn": kookapp,
-  "latexstudio.net": latexstudio
+  "latexstudio.net": latexstudio,
+  "leetcode.cn": leetcode,
+  "linkedin.com": linkedin,
+  "logonews.cn": logonews,
+  "oschina.net": oschina,
+  "qcc.com": qcc,
+  "docs.qq.com": docsqq
 }
