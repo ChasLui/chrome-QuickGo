@@ -1,5 +1,7 @@
+import doc360 from "data-base64:~assets/360doc.svg"
 import afdian from "data-base64:~assets/afdian.svg"
 import aliyun from "data-base64:~assets/aliyun.svg"
+import baidutieba from "data-base64:~assets/baidutieba.svg"
 import bilibili from "data-base64:~assets/bilibili.svg"
 import chinaz from "data-base64:~assets/chinaz.svg"
 import coolapk from "data-base64:~assets/coolapk.svg"
@@ -12,6 +14,7 @@ import gcores from "data-base64:~assets/gcores.svg"
 import gitee from "data-base64:~assets/gitee.svg"
 import hellogithub from "data-base64:~assets/hellogithub.svg"
 import infoq from "data-base64:~assets/infoq.svg"
+import instagram from "data-base64:~assets/instagram.svg"
 import jianshu from "data-base64:~assets/jianshu.svg"
 import juejin from "data-base64:~assets/juejin.svg"
 import kookapp from "data-base64:~assets/kookapp.svg"
@@ -19,9 +22,16 @@ import latexstudio from "data-base64:~assets/latexstudio.svg"
 import leetcode from "data-base64:~assets/leetcode.svg"
 import linkedin from "data-base64:~assets/linkedin.svg"
 import logonews from "data-base64:~assets/logonews.svg"
+import mailqq from "data-base64:~assets/mailqq.svg"
 import oschina from "data-base64:~assets/oschina.svg"
 import qcc from "data-base64:~assets/qcc.svg"
+import qq from "data-base64:~assets/qq.svg"
+import shimo from "data-base64:~assets/shimo.svg"
 import sspai from "data-base64:~assets/sspai.svg"
+import steamcommunity from "data-base64:~assets/steamcommunity.svg"
+import telegram from "data-base64:~assets/telegram.svg"
+import tencent from "data-base64:~assets/tencent.svg"
+import tianyancha from "data-base64:~assets/tianyancha.svg"
 import zhihu from "data-base64:~assets/zhihu.svg"
 
 export const domainFaviconMap = {
@@ -51,5 +61,15 @@ export const domainFaviconMap = {
   "logonews.cn": logonews,
   "oschina.net": oschina,
   "qcc.com": qcc,
-  "docs.qq.com": docsqq
+  "docs.qq.com": docsqq,
+  "360doc.cn": doc360,
+  "instagram.com": instagram,
+  "mail.qq.com": mailqq,
+  "wx.mail.qq.com": qq,
+  "shimo.im": shimo,
+  "steamcommunity.com": steamcommunity,
+  "t.me": telegram,
+  "tencent.com": tencent,
+  "tianyancha.com": tianyancha,
+  "tieba.baidu.com": baidutieba
 }

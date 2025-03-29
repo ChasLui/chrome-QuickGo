@@ -146,7 +146,7 @@ const Card = (props) => {
       <div className="flex items-center flex-1 overflow-auto">
         <div className="w-6 h-6 min-w-6 min-h-6">
           <Img
-            className={classnames("w-full h-full rounded-md object-contain", {
+            className={classnames("w-full h-full rounded-md object--contain", {
               "filter grayscale": disable
             })}
             src={iconUrl}

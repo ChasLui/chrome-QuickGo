@@ -234,13 +234,110 @@ export const defaultData = [
     disable: false,
     isDefault: true
   },
-
   {
     // https://docs.qq.com/scenario/link.html?url=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
     id: "docsqq",
     hostIcon: true,
     matchUrl: "docs.qq.com/scenario/link.html",
     redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.360doc.cn/outlink.html?url=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "360doc",
+    matchUrl: "360doc.cn/outlink.html",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.instagram.com/linkshim/?u=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "instagram",
+    matchUrl: "instagram.com/linkshim",
+    redirectKey: "u",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://mail.qq.com/cgi-bin/readtemplate?gourl=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "mailqq",
+    hostIcon: true,
+    matchUrl: "mail.qq.com/cgi-bin/readtemplate",
+    redirectKey: "gourl",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://wx.mail.qq.com/xmspamcheck/xmsafejump?url=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "wxmailqq",
+    hostIcon: true,
+    matchUrl: "wx.mail.qq.com/xmspamcheck/xmsafejump",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://shimo.im/outlink/black?url=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "shimo",
+    matchUrl: "shimo.im/outlink/black",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://shimo.im/outlink/gray?url=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "shimo2",
+    matchUrl: "shimo.im/outlink/gray",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://steamcommunity.com/linkfilter?url=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "steamcommunity",
+    matchUrl: "steamcommunity.com/linkfilter",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    id: "telegram",
+    matchUrl: "t.me/iv",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgit-scm.com%2Fbook%2Fzh%2Fv2%2Fch00%2F_commit_status&objectId=1434763&objectType=1&isNewArticle=undefined
+    id: "tencent",
+    matchUrl: "cloud.tencent.com/developer/tools/blog-entry",
+    redirectKey: "target",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://www.tianyancha.com/security?target=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "tianyancha",
+    matchUrl: "tianyancha.com/security",
+    redirectKey: "target",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://tieba.baidu.com/mo/q/checkurl?url=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "baidutieba",
+    hostIcon: true,
+    matchUrl: "tieba.baidu.com/mo/q/checkurl",
+    redirectKey: "url",
+    disable: false,
+    isDefault: true
+  },
+  {
+    // https://link.uisdc.com/?redirect=https%3A%2F%2Fwww.aliwork.com%2Fo%2Fcursor
+    id: "uisdc",
+    matchUrl: "link.uisdc.com",
+    redirectKey: "redirect",
     disable: false,
     isDefault: true
   }
