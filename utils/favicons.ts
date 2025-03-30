@@ -9,6 +9,7 @@ import csdn from "data-base64:~assets/csdn.svg"
 import curseforge from "data-base64:~assets/curseforge.svg"
 import docsqq from "data-base64:~assets/docsqq.svg"
 import douban from "data-base64:~assets/douban.svg"
+import duowan from "data-base64:~assets/duowan.svg"
 import gamercomtw from "data-base64:~assets/gamercomtw.svg"
 import gcores from "data-base64:~assets/gcores.svg"
 import gitee from "data-base64:~assets/gitee.svg"
@@ -32,6 +33,9 @@ import steamcommunity from "data-base64:~assets/steamcommunity.svg"
 import telegram from "data-base64:~assets/telegram.svg"
 import tencent from "data-base64:~assets/tencent.svg"
 import tianyancha from "data-base64:~assets/tianyancha.svg"
+import weibo from "data-base64:~assets/weibo.svg"
+import youtube from "data-base64:~assets/youtube.svg"
+import yuque from "data-base64:~assets/yuque.svg"
 import zhihu from "data-base64:~assets/zhihu.svg"
 
 export const domainFaviconMap = {
@@ -71,5 +75,9 @@ export const domainFaviconMap = {
   "t.me": telegram,
   "tencent.com": tencent,
   "tianyancha.com": tianyancha,
-  "tieba.baidu.com": baidutieba
+  "tieba.baidu.com": baidutieba,
+  "yuque.com": yuque,
+  "youtube.com": youtube,
+  "duowan.com": duowan,
+  "weibo.cn": weibo
 }

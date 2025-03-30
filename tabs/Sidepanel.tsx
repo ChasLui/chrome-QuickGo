@@ -129,8 +129,9 @@ const Card = (props) => {
     item as DataSourceItem
   const domain = getDomain(matchUrl, hostIcon)
   const favicon = domainFaviconMap[domain]
-  const iconUrl =
-    favicon || `https://www.faviconextractor.com/favicon/${domain}`
+  const iconUrl = favicon
+
+  // || `https://www.faviconextractor.com/favicon/${domain}`
 
   return (
     <div
@@ -220,7 +221,7 @@ const Count = (props) => {
 const Create = (props) => {
   const { visible, onClose, onOk, editData, dataSource } = props
   const [matchUrl, setMatchUrl] = React.useState("")
-  const [redirectKey, setRedirectKey] = React.useState("")
+  const [redirect, setRedirectKey] = React.useState("")
   const [existed, setExisted] = React.useState(false)
   const create = !editData
   const redirectKeyInputRef = React.useRef<HTMLInputElement>()
@@ -242,9 +243,9 @@ const Create = (props) => {
   /** 编辑 */
   React.useEffect(() => {
     if (!editData) return
-    const { matchUrl, redirectKey } = editData
+    const { matchUrl, redirect } = editData
     setMatchUrl(matchUrl)
-    setRedirectKey(redirectKey)
+    setRedirectKey(redirect)
   }, [editData])
 
   /** 新建 */
@@ -272,9 +273,9 @@ const Create = (props) => {
   }, [visible])
 
   const handleOk = () => {
-    if (!matchUrl || !redirectKey) return
+    if (!matchUrl || !redirect) return
     const id = editData?.id || `${Date.now()}`
-    if (onOk) onOk({ matchUrl, redirectKey, id })
+    if (onOk) onOk({ matchUrl, redirect, id })
     setMatchUrl("")
     setRedirectKey("")
   }
@@ -310,7 +311,7 @@ const Create = (props) => {
           type="text"
           placeholder={chrome.i18n.getMessage("placeholder_parameter")}
           className="input input-bordered input-neutral w-[97%] max-w-xs"
-          value={redirectKey}
+          value={redirect}
           onChange={(e) => setRedirectKey(e.target.value)}
         />
       </div>

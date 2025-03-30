@@ -58,38 +58,50 @@ function setupContextMenuListeners(menuList: MenuItem[]) {
 
 // 监听页面导航事件
 function setupNavigationListeners() {
-  const handleNavigation = async (url: string, tabId: number) => {
+  const handleNavigation = async (url, tabId) => {
     const urlObj = new URL(url)
     const { origin, hostname, pathname, searchParams } = urlObj
-    if (!hostname) return
-    if (origin === "chrome://newtab") return
+    if (!hostname || origin === "chrome://newtab") return
 
     const data = await storage.get<DataSourceItem[]>(StorageKeys.DATA_SOURCE)
-    const dataSource = getMergedData(data)
+    const dataSource: DataSourceItem[] = getMergedData(data)
+    console.log("dataSource: ", dataSource)
     const currentUrl = pathname ? `${hostname}${pathname}` : hostname
 
     const item = dataSource.find((i) => {
-      return (
-        i.matchUrl === currentUrl ||
-        `${i.matchUrl}/` === currentUrl ||
-        `www.${i.matchUrl}` === currentUrl ||
-        `www.${i.matchUrl}/` === currentUrl
-      )
+      const matchUrlVariants = [
+        i.matchUrl,
+        `${i.matchUrl}/`,
+        `www.${i.matchUrl}`,
+        `www.${i.matchUrl}/`
+      ]
+      return matchUrlVariants.includes(currentUrl)
     })
 
-    if (!item || item.disable || !url.includes(item.redirectKey)) return
+    if (!item || item.disable || item.runAtContent) return
 
-    const { redirectKey } = item
-    const redirectUrl = searchParams.get(redirectKey)
+    if (typeof item.redirect === "function") return
+
+    const redirectKeys = Array.isArray(item.redirect)
+      ? item.redirect
+      : [item.redirect]
+
+    const redirectUrl = redirectKeys
+      .map((key) => searchParams.get(key))
+      .find(Boolean)
+
     if (!redirectUrl) return
+    console.log("redirectUrl: ", redirectUrl)
+
     const decodeUrl = decodeURIComponent(redirectUrl)
     if (decodeUrl.includes("://")) {
       ga(GaEvents.REDIRECT)
-      // 将生效的规则放到第一位，计数+1
+
       const newDataSource = [
-        { ...item, count: item.count ? item.count + 1 : 1 },
+        { ...item, count: (item.count || 0) + 1 },
         ...dataSource.filter((i) => i.id !== item.id)
       ]
+
       chrome.tabs.update(tabId, { url: decodeUrl })
       storage.set(StorageKeys.DATA_SOURCE, newDataSource)
     }
