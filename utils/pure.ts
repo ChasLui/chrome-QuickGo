@@ -19,6 +19,8 @@ export interface BaseRuleProps {
   hostIcon?: boolean
   // 在 contentjs 中生效
   runAtContent?: boolean
+  // 更新时间
+  updateAt?: number
 }
 
 const defaultRuleMap: Record<string, BaseRuleProps> = {
@@ -754,7 +756,11 @@ export const getMergedRules = (
     }
   })
 
-  return [...newStorageRules, ...newDefaultRules]
+  // 根据 updateAt 排序
+  const data = [...newStorageRules, ...newDefaultRules].sort((a, b) => {
+    return (b.updateAt || 0) - (a.updateAt || 0)
+  })
+  return data
 }
 
 export const getMergedData = (storageData = []) => {

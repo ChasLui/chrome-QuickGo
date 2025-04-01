@@ -70,8 +70,9 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
   const handleDelete = (item: RuleProps) => {
     if (item.isDefault) return
     ga(GaEvents.ITEM_DELETE)
-    const newDataSource = dataSource.filter((i) => i.id !== item.id)
-    // setDataSource(newDataSource)
+    const newRules = { ...rules }
+    delete newRules[item.id]
+    setRules(newRules)
   }
 
   const handleDisable = (item: RuleProps) => {
@@ -88,9 +89,16 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
   const handleCreateSave = (item: RuleProps) => {
     ga(GaEvents.CREATE_SAVE)
     const { id, ...restProps } = item
+    let updateAt = restProps.updateAt
+    if (!editRef.current) {
+      updateAt = Date.now()
+    }
     setRules({
       ...rules,
-      [id]: restProps as RuleProps
+      [id]: {
+        ...(restProps as RuleProps),
+        updateAt
+      }
     })
     setCreateVisible(false)
   }
