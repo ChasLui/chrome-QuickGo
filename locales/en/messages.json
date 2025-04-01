@@ -27,7 +27,7 @@
     "message": "Create",
     "description": ""
   },
-  "disable": {
+  "disabled": {
     "message": "Disable",
     "description": ""
   },

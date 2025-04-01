@@ -13,9 +13,9 @@ import { getDomain } from "~utils/index"
 import {
   ga,
   GaEvents,
-  getMergedData,
+  getMergedRules,
   StorageKeys,
-  type DataSourceItem
+  type RuleProps
 } from "~utils/pure"
 
 import "~tailwind.less"
@@ -26,16 +26,21 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
   const {} = props
 
   useThemeChange()
-  const editRef = React.useRef<DataSourceItem>()
+  const editRef = React.useRef<RuleProps>()
   const [createVisible, setCreateVisible] = React.useState(false)
-  const [data, setDataSource] = useStorage<DataSourceItem[]>(
-    StorageKeys.DATA_SOURCE,
-    []
+  const [rules, setRules] = useStorage<Record<string, RuleProps>>(
+    StorageKeys.RULES,
+    {}
   )
+  console.log("rules: ", rules)
+
+  // React.useEffect(() => {
+  //   setRules({})
+  // }, [])
 
   const dataSource = React.useMemo(() => {
-    return getMergedData(data)
-  }, [data])
+    return getMergedRules(rules)
+  }, [rules])
 
   React.useEffect(() => {
     if (createVisible) return
@@ -48,42 +53,45 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
     setCreateVisible(true)
   }
 
-  const handleEdit = (item: DataSourceItem) => {
+  const handleEdit = (item: RuleProps) => {
     if (item.isDefault) return
     ga(GaEvents.ITEM_EDIT)
     editRef.current = item
     setCreateVisible(true)
   }
 
-  const handleClickUrl = (e, item: DataSourceItem) => {
+  const handleClickUrl = (e, item: RuleProps) => {
     e.stopPropagation()
     chrome.tabs.create({
       url: `https://${item.matchUrl}`
     })
   }
 
-  const handleDelete = (item: DataSourceItem) => {
+  const handleDelete = (item: RuleProps) => {
+    if (item.isDefault) return
     ga(GaEvents.ITEM_DELETE)
     const newDataSource = dataSource.filter((i) => i.id !== item.id)
-    setDataSource(newDataSource)
+    // setDataSource(newDataSource)
   }
 
-  const handleDisable = (item: DataSourceItem) => {
+  const handleDisable = (item: RuleProps) => {
     ga(GaEvents.ITEM_DISABLE)
-    item.disable = !item.disable
-    setDataSource([...dataSource])
+    setRules({
+      ...rules,
+      [item.id]: {
+        ...rules[item.id],
+        disabled: !item.disabled
+      }
+    })
   }
 
-  const handleCreateSave = (item: DataSourceItem) => {
+  const handleCreateSave = (item: RuleProps) => {
     ga(GaEvents.CREATE_SAVE)
-    if (editRef.current) {
-      const index = dataSource.findIndex((i) => i.id === editRef.current.id)
-      const newDataSource = [...dataSource]
-      newDataSource[index] = item
-      setDataSource(newDataSource)
-    } else {
-      setDataSource([...dataSource, item])
-    }
+    const { id, ...restProps } = item
+    setRules({
+      ...rules,
+      [id]: restProps as RuleProps
+    })
     setCreateVisible(false)
   }
 
@@ -125,8 +133,7 @@ const Card = (props) => {
   const { item, handleClickUrl, handleDisable, handleDelete, handleEdit } =
     props
 
-  const { matchUrl, disable, isDefault, count, hostIcon } =
-    item as DataSourceItem
+  const { matchUrl, disabled, isDefault, count, hostIcon } = item as RuleProps
   const domain = getDomain(matchUrl, hostIcon)
   const favicon = domainFaviconMap[domain]
   const iconUrl = favicon
@@ -140,15 +147,15 @@ const Card = (props) => {
       className={classnames(
         "alert flex mb-2 justify-between overflow-hidden py-3 group",
         {
-          "bg-base-300": disable,
-          "hover:shadow-xl": !disable
+          "bg-base-300": disabled,
+          "hover:shadow-xl": !disabled
         }
       )}>
       <div className="flex items-center flex-1 overflow-auto">
         <div className="w-6 h-6 min-w-6 min-h-6">
           <Img
             className={classnames("w-full h-full rounded-md object--contain", {
-              "filter grayscale": disable
+              "filter grayscale": disabled
             })}
             src={iconUrl}
           />
@@ -156,7 +163,7 @@ const Card = (props) => {
         <a
           target="_blank"
           className={classnames("link font-bold ml-3 text-sm ellipsis", {
-            "line-through": disable
+            "line-through": disabled
           })}
           onClick={(e) => handleClickUrl(e, item)}>
           {matchUrl}
@@ -185,17 +192,17 @@ const Card = (props) => {
 
 const EnableButton = (props) => {
   const { item, handleDisable, className } = props
-  const { disable } = item as DataSourceItem
+  const { disabled } = item as RuleProps
 
-  const text = disable
+  const text = disabled
     ? chrome.i18n.getMessage("enable")
-    : chrome.i18n.getMessage("disable")
+    : chrome.i18n.getMessage("disabled")
 
   return (
     <button
       onClick={() => handleDisable(item)}
       className={classnames("btn btn-xs", className, {
-        "btn-accent": !disable
+        "btn-accent": !disabled
       })}>
       {text}
     </button>

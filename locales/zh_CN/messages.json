@@ -27,7 +27,7 @@
     "message": "创建",
     "description": ""
   },
-  "disable": {
+  "disabled": {
     "message": "禁用",
     "description": ""
   },
