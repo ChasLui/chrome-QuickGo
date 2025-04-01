@@ -266,6 +266,16 @@ const defaultRuleMap: Record<string, BaseRuleProps> = {
       window.location.href = url
     },
     runAtContent: true
+  },
+  // https://www.yunpanziyuan.xyz/gowild.htm?url=https_3A_2F_2Fpan_2equark_2ecn_2Fs_2Fdee48eed51d7
+  // https://www.yunpanziyuan.xyz/thread-522696.htm
+  yunpanziyuan: {
+    matchUrl: "yunpanziyuan.xyz/gowild.htm",
+    redirect() {
+      const url = document.querySelector("div.url_div").getAttribute("title")
+      window.location.href = url
+    },
+    runAtContent: true
   }
 }
 

@@ -63,9 +63,9 @@ function setupNavigationListeners() {
     const { origin, hostname, pathname, searchParams } = urlObj
     if (!hostname || origin === "chrome://newtab") return
 
-    const data = await storage.get<Record<string, RuleProps>>(StorageKeys.RULES)
+    const data =
+      (await storage.get<Record<string, RuleProps>>(StorageKeys.RULES)) || {}
     const dataSource: RuleProps[] = getMergedRules(data)
-    console.log("dataSource: ", dataSource)
     const currentUrl = pathname ? `${hostname}${pathname}` : hostname
 
     const item = dataSource.find((i) => {

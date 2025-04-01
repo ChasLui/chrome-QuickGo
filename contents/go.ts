@@ -16,7 +16,8 @@ const handleNavigation = async () => {
   const { origin, hostname, pathname } = window.location
   if (!hostname || origin === "chrome://newtab") return
 
-  const data = await storage.get<Record<string, RuleProps>>(StorageKeys.RULES)
+  const data =
+    (await storage.get<Record<string, RuleProps>>(StorageKeys.RULES)) || {}
   const dataSource: RuleProps[] = getMergedRules(data)
   const currentUrl = pathname ? `${hostname}${pathname}` : hostname
 
