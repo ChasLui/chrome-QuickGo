@@ -7,7 +7,8 @@ import { getMergedRules, StorageKeys, type RuleProps } from "~utils/pure"
 export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"],
   all_frames: false,
-  run_at: "document_end"
+  run_at: "document_end",
+  world: "MAIN"
 }
 
 const storage = new Storage()
@@ -22,16 +23,21 @@ const handleNavigation = async () => {
   const currentUrl = pathname ? `${hostname}${pathname}` : hostname
 
   const item = dataSource.find((i) => {
-    const matchUrlVariants = [
-      i.matchUrl,
-      `${i.matchUrl}/`,
-      `www.${i.matchUrl}`,
-      `www.${i.matchUrl}/`
-    ]
-    return matchUrlVariants.includes(currentUrl)
+    if (!i.matchUrl) return false
+
+    let pattern = i.matchUrl
+      .replace(/\./g, "\\.") // 转义 `.`
+      .replace(/\(\*\)/g, ".*") // `(*)` 替换为 `.*`，匹配任意内容
+
+    // 允许 `www.` 可选，并允许末尾可选的 `/`
+    pattern = `^(www\\.)?${pattern}/?$`
+
+    const regex = new RegExp(pattern)
+
+    return regex.test(currentUrl)
   })
 
-  if (!item || item.disabled) return
+  if (!item || item.disabled || !item.runAtContent) return
 
   if (typeof item.redirect === "function") {
     const { id, count } = item

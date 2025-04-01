@@ -271,11 +271,32 @@ const defaultRuleMap: Record<string, BaseRuleProps> = {
   // https://www.yunpanziyuan.xyz/thread-522696.htm
   yunpanziyuan: {
     matchUrl: "yunpanziyuan.xyz/gowild.htm",
+    runAtContent: true,
     redirect() {
       const url = document.querySelector("div.url_div").getAttribute("title")
       window.location.href = url
-    },
-    runAtContent: true
+    }
+  },
+  // https://bbs.acgrip.com/thread-5675-1-1.html
+  acgrip: {
+    matchUrl: "bbs.acgrip.com/(*)",
+    runAtContent: true,
+    redirect() {
+      document.querySelectorAll("a").forEach((elem) => {
+        if (
+          elem.href &&
+          elem.href.startsWith("http") &&
+          !elem.href.includes(window.location.host)
+        ) {
+          elem.addEventListener("click", (event) => {
+            event.preventDefault()
+            // @ts-ignore
+            window.hideMenu("fwin_dialog", "dialog")
+            window.open(elem.href, "_blank")
+          })
+        }
+      })
+    }
   }
 }
 
