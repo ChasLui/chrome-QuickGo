@@ -245,6 +245,7 @@ const Create = (props) => {
     matchUrl: ""
   })
   const [existed, setExisted] = React.useState(false)
+  const redirectRef = React.useRef<HTMLInputElement>(null)
   const create = !editData
 
   React.useEffect(() => {
@@ -263,7 +264,7 @@ const Create = (props) => {
   React.useEffect(() => {
     if (!visible) return
     if (editData) return
-
+    redirectRef.current?.focus?.()
     chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
       const activeTab = tabs[0]
       const activeTabUrl = activeTab.url
@@ -366,6 +367,7 @@ const Create = (props) => {
               <span className="label-text">redirect</span>
             </div>
             <input
+              ref={redirectRef}
               type="text"
               value={redirect as string}
               onChange={(e) => setForm({ ...form, redirect: e.target.value })}
