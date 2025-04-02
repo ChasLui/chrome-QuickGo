@@ -20,6 +20,13 @@ const Modal: React.FC<ModalProps> = (props) => {
 
   React.useEffect(() => {
     const dialog: HTMLDialogElement = document.querySelector(`#${id}`)
+    dialog.addEventListener("cancel", () => {
+      onClose()
+    })
+  }, [])
+
+  React.useEffect(() => {
+    const dialog: HTMLDialogElement = document.querySelector(`#${id}`)
     if (visible) {
       dialog.showModal()
       return
