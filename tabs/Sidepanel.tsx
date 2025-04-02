@@ -257,26 +257,27 @@ const Create = (props) => {
       const { hostname, pathname, searchParams } = new URL(activeTabUrl)
       const url = pathname ? `${hostname}${pathname}` : hostname
 
-      const form: Partial<RuleProps> = {
+      const newForm: Partial<RuleProps> = {
+        ...form,
         matchUrl: url
       }
       if (searchParams.get("target")) {
-        form.redirect = searchParams.get("target")
+        newForm.redirect = searchParams.get("target")
       }
       if (searchParams.get("url")) {
-        form.redirect = searchParams.get("url")
+        newForm.redirect = searchParams.get("url")
       }
       const title = await getDocumentTitle()
       if (title) {
-        form.title = title
+        newForm.title = title
       }
 
       const domain = getDomain(url)
       if (domain) {
-        form.homePage = `https://${domain}`
+        newForm.homePage = `https://${domain}`
       }
 
-      setForm(form)
+      setForm(newForm)
     })
   }, [visible])
 
@@ -290,6 +291,8 @@ const Create = (props) => {
   }
 
   const disabled = !matchUrl || !redirect || existed
+
+  console.log(form, "form")
 
   return (
     <Modal
