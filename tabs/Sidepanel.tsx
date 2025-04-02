@@ -13,6 +13,7 @@ import { getDomain } from "~utils/index"
 import {
   ga,
   GaEvents,
+  getDocumentTitle,
   getMergedRules,
   StorageKeys,
   type RuleProps
@@ -237,39 +238,33 @@ const Count = (props) => {
 
 const Create = (props) => {
   const { visible, onClose, onOk, editData, dataSource } = props
-  const [matchUrl, setMatchUrl] = React.useState("")
-  const [redirect, setRedirectKey] = React.useState("")
+  const [form, setForm] = React.useState<Partial<RuleProps>>({
+    title: "",
+    homePage: "",
+    redirect: "",
+    matchUrl: ""
+  })
   const [existed, setExisted] = React.useState(false)
   const create = !editData
-  const redirectKeyInputRef = React.useRef<HTMLInputElement>()
 
   React.useEffect(() => {
     if (!create) return
-    const existed = dataSource.find((i) => i.matchUrl === matchUrl)
+    const existed = dataSource.find((i) => i.matchUrl === form.matchUrl)
     setExisted(!!existed)
-  }, [create, matchUrl])
-
-  React.useEffect(() => {
-    if (visible) {
-      redirectKeyInputRef.current.focus()
-      return
-    }
-    setExisted(false)
-  }, [visible])
+  }, [create, form.matchUrl])
 
   /** 编辑 */
   React.useEffect(() => {
     if (!editData) return
-    const { matchUrl, redirect } = editData
-    setMatchUrl(matchUrl)
-    setRedirectKey(redirect)
+    setForm(editData)
   }, [editData])
 
   /** 新建 */
   React.useEffect(() => {
     if (!visible) return
     if (editData) return
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+
+    chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
       const activeTab = tabs[0]
       const activeTabUrl = activeTab.url
       if (["chrome://extensions/", "chrome://newtab/"].includes(activeTabUrl)) {
@@ -278,59 +273,107 @@ const Create = (props) => {
       if (!activeTabUrl) return
       const { hostname, pathname, searchParams } = new URL(activeTabUrl)
       const url = pathname ? `${hostname}${pathname}` : hostname
-      setMatchUrl(url)
+
+      const form: Partial<RuleProps> = {
+        matchUrl: url
+      }
       if (searchParams.get("target")) {
-        setRedirectKey("target")
-        return
+        form.redirect = searchParams.get("target")
       }
       if (searchParams.get("url")) {
-        setRedirectKey("url")
+        form.redirect = searchParams.get("url")
       }
+      const title = await getDocumentTitle()
+      if (title) {
+        form.title = title
+      }
+
+      const domain = getDomain(url)
+      if (domain) {
+        form.homePage = `https://${domain}`
+      }
+
+      setForm(form)
     })
   }, [visible])
+
+  const { matchUrl, redirect } = form
 
   const handleOk = () => {
     if (!matchUrl || !redirect) return
     const id = editData?.id || `${Date.now()}`
-    if (onOk) onOk({ matchUrl, redirect, id })
-    setMatchUrl("")
-    setRedirectKey("")
+    if (onOk) onOk({ id, ...form })
+    setForm({ matchUrl: "", redirect: "", title: "", homePage: "" })
   }
+
+  const disabled = !matchUrl || !redirect || existed
 
   return (
     <Modal
       visible={visible}
       onClose={onClose}
       onOk={handleOk}
-      okButtonProps={{ disabled: existed }}>
+      okButtonProps={{ disabled }}>
       <div className="flex flex-col justify-center items-center">
-        <div className="mb-4 w-full flex flex-col justify-center items-center">
-          <input
-            type="text"
-            placeholder={chrome.i18n.getMessage("placeholder_url")}
-            className={classnames(
-              "input input-bordered input-neutral w-[97%] max-w-xs",
-              {
-                "input-error": existed
-              }
-            )}
-            value={matchUrl}
-            onChange={(e) => setMatchUrl(e.target.value)}
-          />
-          {existed && (
-            <div className="text-xs text-error mt-2 w-[97%]">
-              {chrome.i18n.getMessage("existed")}
+        <div className="mb-4 px-1 w-full flex flex-col justify-center items-center">
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">title</span>
             </div>
-          )}
+            <input
+              type="text"
+              value={form.title}
+              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              className="input input-bordered w-full max-w-xs"
+              placeholder="Type here"
+            />
+          </label>
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">homePage</span>
+            </div>
+            <input
+              type="text"
+              value={form.homePage}
+              onChange={(e) => setForm({ ...form, homePage: e.target.value })}
+              className="input input-bordered w-full max-w-xs"
+              placeholder="Type here"
+            />
+          </label>
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">matchUrl</span>
+            </div>
+            <input
+              type="text"
+              value={matchUrl}
+              onChange={(e) => setForm({ ...form, matchUrl: e.target.value })}
+              className={classnames("input input-bordered w-full max-w-xs", {
+                "input-error": existed
+              })}
+              placeholder={chrome.i18n.getMessage("placeholder_url")}
+            />
+            {existed && (
+              <div className="label">
+                <span className="label-text-alt text-error">
+                  {chrome.i18n.getMessage("existed")}
+                </span>
+              </div>
+            )}
+          </label>
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">redirect</span>
+            </div>
+            <input
+              type="text"
+              value={redirect as string}
+              onChange={(e) => setForm({ ...form, redirect: e.target.value })}
+              className="input input-bordered w-full max-w-xs"
+              placeholder={chrome.i18n.getMessage("placeholder_parameter")}
+            />
+          </label>
         </div>
-        <input
-          ref={redirectKeyInputRef}
-          type="text"
-          placeholder={chrome.i18n.getMessage("placeholder_parameter")}
-          className="input input-bordered input-neutral w-[97%] max-w-xs"
-          value={redirect}
-          onChange={(e) => setRedirectKey(e.target.value)}
-        />
       </div>
     </Modal>
   )

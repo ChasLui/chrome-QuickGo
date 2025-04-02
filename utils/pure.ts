@@ -540,3 +540,33 @@ export const getMergedRules = (
   })
   return data
 }
+
+export const getDocumentTitle = async (): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (!tabs.length || !tabs[0].id) {
+        reject(new Error("No active tab found"))
+        return
+      }
+
+      chrome.scripting.executeScript(
+        {
+          target: { tabId: tabs[0].id },
+          func: () => document.title
+        },
+        (results) => {
+          if (chrome.runtime.lastError) {
+            reject(new Error(chrome.runtime.lastError.message))
+            return
+          }
+
+          if (results && results[0]?.result) {
+            resolve(results[0].result)
+          } else {
+            reject(new Error("Failed to get document title"))
+          }
+        }
+      )
+    })
+  })
+}
