@@ -146,9 +146,8 @@ const Card = (props) => {
     item as RuleProps
   const domain = getDomain(matchUrl, hostIcon)
   const favicon = domainFaviconMap[domain]
-  const iconUrl = favicon
-
-  // || `https://www.faviconextractor.com/favicon/${domain}`
+  const iconUrl =
+    favicon || `https://www.faviconextractor.com/favicon/${domain}`
 
   return (
     <div
@@ -192,7 +191,7 @@ const Card = (props) => {
         {!isDefault && (
           <button
             onClick={() => handleDelete(item)}
-            className="btn btn-xs btn-error ml-2">
+            className="btn btn-xs btn-error ml-2 hidden group-hover:block">
             {chrome.i18n.getMessage("delete")}
           </button>
         )}
