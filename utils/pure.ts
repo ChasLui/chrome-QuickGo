@@ -510,35 +510,28 @@ const getDefaultRules = (): RuleProps[] => {
 export const getMergedRules = (
   storageData: Record<string, RuleProps> = {}
 ): RuleProps[] => {
-  const storageDataKeys = Object.keys(storageData)
+  const defaultRules = getDefaultRules()
 
-  const newDefaultRules = getDefaultRules().filter((item) => {
-    return !storageDataKeys.includes(item.id)
-  })
-
-  const newStorageRules = storageDataKeys.map((id) => {
-    const rule = storageData[id]
-    const defaultRule = defaultRuleMap[id]
-    if (rule && defaultRule) {
+  const mergedRules = defaultRules.map((defaultRule) => {
+    const id = defaultRule.id
+    if (storageData[id]) {
       return {
         id,
         isDefault: true,
         ...defaultRule,
-        ...rule
+        ...storageData[id]
       }
     }
+    return defaultRule
+  })
 
-    return {
-      id,
-      ...rule
+  for (const id in storageData) {
+    if (!defaultRules.some((rule) => rule.id === id)) {
+      mergedRules.push({ id, ...storageData[id] })
     }
-  })
+  }
 
-  // 根据 updateAt 排序
-  const data = [...newStorageRules, ...newDefaultRules].sort((a, b) => {
-    return (b.updateAt || 0) - (a.updateAt || 0)
-  })
-  return data
+  return mergedRules.sort((a, b) => (b.updateAt || 0) - (a.updateAt || 0))
 }
 
 export const getDocumentTitle = async (): Promise<string> => {

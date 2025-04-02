@@ -184,10 +184,11 @@ const Card = (props) => {
         className="flex flex-nowrap items-center"
         onClick={(e) => e.stopPropagation()}>
         <Count count={count} className="group-hover:hidden" />
-        <EnableButton
-          item={item}
-          handleDisable={handleDisable}
-          className="hidden group-hover:block"
+        <input
+          type="checkbox"
+          className="toggle toggle-accent hidden group-hover:block"
+          checked={!disabled}
+          onChange={() => handleDisable(item)}
         />
         {!isDefault && (
           <button
@@ -198,25 +199,6 @@ const Card = (props) => {
         )}
       </div>
     </div>
-  )
-}
-
-const EnableButton = (props) => {
-  const { item, handleDisable, className } = props
-  const { disabled } = item as RuleProps
-
-  const text = disabled
-    ? chrome.i18n.getMessage("enable")
-    : chrome.i18n.getMessage("disabled")
-
-  return (
-    <button
-      onClick={() => handleDisable(item)}
-      className={classnames("btn btn-xs", className, {
-        "btn-accent": !disabled
-      })}>
-      {text}
-    </button>
   )
 }
 
