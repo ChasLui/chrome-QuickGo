@@ -1,8 +1,6 @@
 import type { PlasmoCSConfig } from "plasmo"
 
-import { Storage } from "@plasmohq/storage"
-
-import { getMergedRules, StorageKeys, type RuleProps } from "~utils/pure"
+import { getMergedRules, type RuleProps } from "~utils/pure"
 
 export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"],
@@ -11,18 +9,37 @@ export const config: PlasmoCSConfig = {
   world: "MAIN"
 }
 
-const storage = new Storage()
+const getRules = async (): Promise<{
+  rules: RuleProps[]
+  ruleMap: Record<string, RuleProps>
+}> => {
+  return new Promise((resolve) => {
+    const handleMessage = (event) => {
+      if (event.data.type === "QuickGo::GET_RULES_FROM_CONTENT_SCRIPT") {
+        window.removeEventListener("message", handleMessage)
+        const ruleMap = event.data.data
+        const rules = getMergedRules(ruleMap)
+        resolve({
+          rules,
+          ruleMap
+        })
+      }
+    }
+
+    window.addEventListener("message", handleMessage)
+    window.postMessage({ type: "QuickGo::GET_RULES_FROM_INJECTED_SCRIPT" }, "*")
+  })
+}
 
 const handleNavigation = async () => {
   const { origin, hostname, pathname } = window.location
   if (!hostname || origin === "chrome://newtab") return
 
-  const data =
-    (await storage.get<Record<string, RuleProps>>(StorageKeys.RULES)) || {}
-  const dataSource: RuleProps[] = getMergedRules(data)
+  const { rules, ruleMap } = await getRules()
+
   const currentUrl = pathname ? `${hostname}${pathname}` : hostname
 
-  const item = dataSource.find((i) => {
+  const rule = rules.find((i) => {
     if (!i.matchUrl) return false
 
     let pattern = i.matchUrl
@@ -37,24 +54,37 @@ const handleNavigation = async () => {
     return regex.test(currentUrl)
   })
 
-  if (!item || item.disabled || !item.runAtContent) return
+  if (!rule) return
 
-  if (typeof item.redirect === "function") {
-    const { id, count } = item
-    const newData = {
-      ...data,
-      [id]: {
-        ...data[id],
-        count: (count || 0) + 1,
-        updateAt: Date.now()
+  const { id, disabled, runAtContent } = rule
+  if (disabled || !runAtContent) return
+
+  if (typeof rule.redirect === "function") {
+    const updater = () => {
+      const { count, ...restProps } = ruleMap[id] || {}
+      const newRuleMap = {
+        ...ruleMap,
+        [id]: {
+          ...restProps,
+          count: count || 0,
+          updateAt: Date.now()
+        }
+      }
+
+      return () => {
+        newRuleMap[id].count = newRuleMap[id].count + 1
+        newRuleMap[id].updateAt = Date.now()
+        window.postMessage(
+          { type: "QuickGo::SET_RULES_FROM_INJECTED_SCRIPT", data: newRuleMap },
+          "*"
+        )
       }
     }
-    await storage.set(StorageKeys.RULES, newData)
-    item.redirect()
+
+    const update = updater()
+    rule.redirect(update)
     return
   }
 }
 
 handleNavigation()
-
-export {}

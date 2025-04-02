@@ -1,12 +1,18 @@
+import cto51 from "data-base64:~assets/51cto.svg"
 import doc360 from "data-base64:~assets/360doc.svg"
+import acgrip from "data-base64:~assets/acgrip.svg"
 import afdian from "data-base64:~assets/afdian.svg"
 import aliyun from "data-base64:~assets/aliyun.svg"
 import baidutieba from "data-base64:~assets/baidutieba.svg"
+import baike from "data-base64:~assets/baike.svg"
 import bilibili from "data-base64:~assets/bilibili.svg"
+import blzxteam from "data-base64:~assets/blzxteam.svg"
+import bookmarkearth from "data-base64:~assets/bookmarkearth.svg"
 import chinaz from "data-base64:~assets/chinaz.svg"
 import coolapk from "data-base64:~assets/coolapk.svg"
 import csdn from "data-base64:~assets/csdn.svg"
 import curseforge from "data-base64:~assets/curseforge.svg"
+import developersweixin from "data-base64:~assets/developersweixin.svg"
 import docsqq from "data-base64:~assets/docsqq.svg"
 import douban from "data-base64:~assets/douban.svg"
 import duowan from "data-base64:~assets/duowan.svg"
@@ -24,6 +30,8 @@ import leetcode from "data-base64:~assets/leetcode.svg"
 import linkedin from "data-base64:~assets/linkedin.svg"
 import logonews from "data-base64:~assets/logonews.svg"
 import mailqq from "data-base64:~assets/mailqq.svg"
+import nodeseek from "data-base64:~assets/nodeseek.svg"
+import nowcoder from "data-base64:~assets/nowcoder.svg"
 import oschina from "data-base64:~assets/oschina.svg"
 import qcc from "data-base64:~assets/qcc.svg"
 import qq from "data-base64:~assets/qq.svg"
@@ -33,8 +41,10 @@ import steamcommunity from "data-base64:~assets/steamcommunity.svg"
 import telegram from "data-base64:~assets/telegram.svg"
 import tencent from "data-base64:~assets/tencent.svg"
 import tianyancha from "data-base64:~assets/tianyancha.svg"
+import uisdc from "data-base64:~assets/uisdc.svg"
 import weibo from "data-base64:~assets/weibo.svg"
 import youtube from "data-base64:~assets/youtube.svg"
+import yunpanziyuan from "data-base64:~assets/yunpanziyuan.svg"
 import yuque from "data-base64:~assets/yuque.svg"
 import zhihu from "data-base64:~assets/zhihu.svg"
 
@@ -46,8 +56,7 @@ export const domainFaviconMap = {
   "csdn.net": csdn,
   "sspai.com": sspai,
   "afdian.com": afdian,
-  "baike.com": "",
-  "blzxteam.com": "",
+  "blzxteam.com": blzxteam,
   "chinaz.com": chinaz,
   "coolapk.com": coolapk,
   "curseforge.com": curseforge,
@@ -79,5 +88,14 @@ export const domainFaviconMap = {
   "yuque.com": yuque,
   "youtube.com": youtube,
   "duowan.com": duowan,
-  "weibo.cn": weibo
+  "weibo.cn": weibo,
+  "bookmarkearth.cn": bookmarkearth,
+  "yunpanziyuan.xyz": yunpanziyuan,
+  "51cto.com": cto51,
+  "developers.weixin.qq.com": developersweixin,
+  "uisdc.com": uisdc,
+  "nowcoder.com": nowcoder,
+  "nodeseek.com": nodeseek,
+  "baike.com": baike,
+  "acgrip.com": acgrip
 }

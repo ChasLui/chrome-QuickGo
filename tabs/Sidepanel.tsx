@@ -61,9 +61,10 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
   }
 
   const handleClickUrl = (e, item: RuleProps) => {
+    if (!item.homePage) return
     e.stopPropagation()
     chrome.tabs.create({
-      url: `https://${item.matchUrl}`
+      url: item.homePage
     })
   }
 
@@ -141,7 +142,8 @@ const Card = (props) => {
   const { item, handleClickUrl, handleDisable, handleDelete, handleEdit } =
     props
 
-  const { matchUrl, disabled, isDefault, count, hostIcon } = item as RuleProps
+  const { matchUrl, disabled, isDefault, count, hostIcon, title, homePage } =
+    item as RuleProps
   const domain = getDomain(matchUrl, hostIcon)
   const favicon = domainFaviconMap[domain]
   const iconUrl = favicon
@@ -169,12 +171,13 @@ const Card = (props) => {
           />
         </div>
         <a
+          title={homePage || matchUrl}
           target="_blank"
           className={classnames("link font-bold ml-3 text-sm ellipsis", {
             "line-through": disabled
           })}
           onClick={(e) => handleClickUrl(e, item)}>
-          {matchUrl}
+          {title || matchUrl}
         </a>
       </div>
       <div

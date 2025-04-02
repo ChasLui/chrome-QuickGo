@@ -1,7 +1,7 @@
 {
   "name": "quickgo",
   "displayName": "__MSG_extensionName__",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "description": "__MSG_extensionDescription__",
   "author": "Dolov. <songyan_shi@163.com>",
   "scripts": {

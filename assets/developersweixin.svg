@@ -1,0 +1,25 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" fill="none" />
+  <rect opacity="0.6" x="2" y="2" width="28" height="28" rx="14" stroke="#A5A5A5"
+    stroke-width="0.08" />
+  <rect opacity="0.6" x="4" y="4" width="24" height="24" stroke="#A5A5A5" stroke-width="0.08" />
+  <rect opacity="0.6" x="2" y="6" width="28" height="20" stroke="#A5A5A5" stroke-width="0.08" />
+  <rect opacity="0.6" x="6" y="30" width="28" height="20" transform="rotate(-90 6 30)"
+    stroke="#A5A5A5" stroke-width="0.08" />
+  <rect x="2" y="2" width="7" height="7" rx="1.75" fill="#33ABFD" />
+  <rect x="11.5" y="26.5" width="6.36396" height="6.36396" rx="1.06066"
+    transform="rotate(-45 11.5 26.5)" fill="#33ABFD" />
+  <rect x="2" y="23" width="7" height="7" rx="1.75" fill="#FC8838" />
+  <rect x="11.5" y="5.5" width="6.36396" height="6.36396" rx="1.06066"
+    transform="rotate(-45 11.5 5.5)" fill="#FC8838" />
+  <rect x="22" y="16" width="5.65685" height="5.65685" rx="0.942809" transform="rotate(-45 22 16)"
+    fill="#8385F3" />
+  <rect x="23" y="2" width="7" height="7" rx="1.75" fill="#03C362" />
+  <ellipse cx="16" cy="16" rx="4" ry="3" fill="#03C362" />
+  <path
+    d="M5.13397 13.5C5.51887 12.8333 6.48113 12.8333 6.86603 13.5L9.4641 18C9.849 18.6667 9.36788 19.5 8.59808 19.5H3.40192C2.63212 19.5 2.151 18.6667 2.5359 18L5.13397 13.5Z"
+    fill="#8385F3" />
+  <path
+    d="M25.134 23.5C25.5189 22.8333 26.4811 22.8333 26.866 23.5L29.4641 28C29.849 28.6667 29.3679 29.5 28.5981 29.5H23.4019C22.6321 29.5 22.151 28.6667 22.5359 28L25.134 23.5Z"
+    fill="#03C362" />
+</svg>
