@@ -14,7 +14,7 @@
 
 <div align="center">
 
-[chrome web store](https://chromewebstore.google.com/detail/quickgo/homllehcipjgpbpepcojhgcpfdopjhml) QuickGo 外链直达 — 无感知自动跳过知乎、简书、掘金、CSDN、少数派、Gitee 等网站的安全中心跳转限制。
+[chrome web store](https://chromewebstore.google.com/detail/quickgo/homllehcipjgpbpepcojhgcpfdopjhml) QuickGo 外链直达 — 无感知自动跳过知乎、简书、掘金、CSDN、少数派、Gitee 等 50+ 网站的安全中心跳转限制。
 
 [English](https://github.com/Dolov/chrome-QuickGo/blob/main/README.en-US.md) | 简体中文
 
@@ -29,10 +29,11 @@
 ✨ **核心功能**：
 
 - ⚡ **极速跳转**，使用更快的 onCreated & onBeforeNavigate API!
-- 📦 **即装即用**，支持知乎、简书、掘金、CSDN、少数派、Gitee 等网站的自动跳转！
+- 📦 **即装即用**，支持知乎、简书、掘金、CSDN、少数派、Gitee 等 50+ 网站的自动跳转！
 - 🎨 **精美 UI**，多款主题随心切换，打造个性化浏览体验！
 - ✏️ **自定义规则**，支持手动添加未适配网站，让你自由掌控跳转路径！
 - 🖱️ **极简操作**，无需复杂设置，安装即生效，顺畅直达目标！
+- 📊 **智能统计**，支持展示快捷跳转次数，数据尽在掌握！
 
 ### 🛠️ 自定义规则指南
 
@@ -46,6 +47,8 @@
 
 ![img](./screenshots/theme1.png)
 ![img](./screenshots/theme2.png)
+![img](./screenshots/theme3.png)
+![img](./screenshots/theme4.png)
 
 ### 🎉 欢迎使用 QuickGo
 
