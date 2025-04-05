@@ -27,6 +27,8 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
 
   useThemeChange()
   const editRef = React.useRef<RuleProps>()
+  const [peekData, setPeekData] = React.useState(null)
+  const [peekVisible, setPeekVisible] = React.useState(false)
   const [createVisible, setCreateVisible] = React.useState(false)
   const [rules, setRules] = useStorage<Record<string, RuleProps>>(
     StorageKeys.RULES,
@@ -51,6 +53,16 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
     ga(GaEvents.CREATE)
     editRef.current = null
     setCreateVisible(true)
+  }
+
+  const handlePeek = (item: RuleProps) => {
+    if (item === peekData) {
+      setPeekData(null)
+      setPeekVisible(false)
+      return
+    }
+    setPeekData(item)
+    setPeekVisible(true)
   }
 
   const handleEdit = (item: RuleProps) => {
@@ -113,6 +125,7 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
             <Card
               key={id}
               item={item}
+              handlePeek={handlePeek}
               handleEdit={handleEdit}
               handleDelete={handleDelete}
               handleDisable={handleDisable}
@@ -121,8 +134,9 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
           )
         })}
       </div>
+      <Peek visible={peekVisible} data={peekData} />
       <Actions handleCreate={handleCreate} />
-      <Create
+      <CreateFormModal
         onOk={handleCreateSave}
         visible={createVisible}
         editData={editRef.current}
@@ -136,8 +150,14 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
 export default Sidepanel
 
 const Card = (props) => {
-  const { item, handleClickUrl, handleDisable, handleDelete, handleEdit } =
-    props
+  const {
+    item,
+    handlePeek,
+    handleEdit,
+    handleDelete,
+    handleDisable,
+    handleClickUrl
+  } = props
 
   const { matchUrl, disabled, isDefault, count, hostIcon, title, homePage } =
     item as RuleProps
@@ -160,10 +180,14 @@ const Card = (props) => {
       <div className="flex items-center flex-1 overflow-auto">
         <div className="w-6 h-6 min-w-6 min-h-6">
           <Img
-            className={classnames("w-full h-full rounded-md object--contain", {
-              "filter grayscale": disabled
-            })}
             src={iconUrl}
+            onClick={() => handlePeek(item)}
+            className={classnames(
+              "w-full h-full rounded-md object--contain cursor-pointer",
+              {
+                "filter grayscale": disabled
+              }
+            )}
           />
         </div>
         <a
@@ -214,7 +238,7 @@ const Count = (props) => {
   )
 }
 
-const Create = (props) => {
+const CreateFormModal = (props) => {
   const { visible, onClose, onOk, editData, dataSource } = props
   const [form, setForm] = React.useState<Partial<RuleProps>>({
     title: "",
@@ -402,6 +426,23 @@ const Actions = (props) => {
             <MaterialSymbolsSettings className="text-xl group-hover:text-primary" />
           </button>
         </div>
+      </div>
+    </div>
+  )
+}
+
+const Peek: React.FC<{ visible: boolean; data: RuleProps }> = (props) => {
+  const { visible, data } = props
+  if (!visible) return null
+
+  const { homePage } = data
+  return (
+    <div className="mockup-browser bg-base-300 border">
+      <div className="mockup-browser-toolbar">
+        <div className="input">{homePage}</div>
+      </div>
+      <div className="bg-base-200 flex justify-center px-4 py-2">
+        <iframe src={homePage} frameBorder="0"></iframe>
       </div>
     </div>
   )
