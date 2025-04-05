@@ -1,5 +1,4 @@
 import classnames from "classnames"
-import empty from "data-base64:~assets/empty.svg"
 import React from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
@@ -105,11 +104,8 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
     setCreateVisible(false)
   }
 
-  const noData = !dataSource.length
-
   return (
     <div className="h-full flex flex-col">
-      {noData && <img src={empty} alt="" />}
       <div className="flex-1 overflow-auto">
         {dataSource.map((item) => {
           const { id } = item
@@ -291,8 +287,6 @@ const Create = (props) => {
   }
 
   const disabled = !matchUrl || !redirect || existed
-
-  console.log(form, "form")
 
   return (
     <Modal
