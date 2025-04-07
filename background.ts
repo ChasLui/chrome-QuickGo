@@ -146,6 +146,7 @@ function setupNavigationListeners() {
 
   chrome.webNavigation.onBeforeNavigate.addListener((details) => {
     const { url, tabId } = details
+    if (!url) return
     if (ignoreUrls.includes(url)) return
 
     if (createTabRef.id === tabId) {
@@ -158,8 +159,8 @@ function setupNavigationListeners() {
 
   chrome.tabs.onCreated.addListener((tab) => {
     const { id, pendingUrl } = tab
-    if (ignoreUrls.includes(pendingUrl)) return
     if (!pendingUrl) return
+    if (ignoreUrls.includes(pendingUrl)) return
     console.log("onCreated: ", id, Date.now(), pendingUrl)
     createTabRef.id = id
     handleNavigation(pendingUrl, id)
