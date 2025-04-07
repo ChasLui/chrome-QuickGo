@@ -116,14 +116,14 @@ function setupNavigationListeners() {
 
   // chrome.webNavigation.onCommitted.addListener((details) => {
   //   if (details.transitionType === "reload") {
-  //     console.log("onCommitted: ", Date.now())
+  //     console.log("legacy:onCommitted: ", Date.now())
   //     handleNavigation(details.url, details.tabId)
   //   }
   // })
 
   // chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   //   if (changeInfo.status === "loading" && changeInfo.url) {
-  //     console.log("onUpdated: ", Date.now())
+  //     console.log("legacy:onUpdated: ", Date.now())
   //     handleNavigation(changeInfo.url, tabId)
   //   }
   // })
@@ -132,8 +132,22 @@ function setupNavigationListeners() {
     id: null
   }
 
+  const ignoreUrls = [
+    "about:blank",
+    "chrome://flags/",
+    "chrome://newtab/",
+    "chrome://history/",
+    "chrome://settings/",
+    "chrome://bookmarks/",
+    "chrome://downloads/",
+    "chrome://extensions/",
+    "chrome://new-tab-page/"
+  ]
+
   chrome.webNavigation.onBeforeNavigate.addListener((details) => {
     const { url, tabId } = details
+    if (ignoreUrls.includes(url)) return
+
     if (createTabRef.id === tabId) {
       createTabRef.id = null
       return
@@ -144,8 +158,10 @@ function setupNavigationListeners() {
 
   chrome.tabs.onCreated.addListener((tab) => {
     const { id, pendingUrl } = tab
-    createTabRef.id = id
+    if (ignoreUrls.includes(pendingUrl)) return
+    if (!pendingUrl) return
     console.log("onCreated: ", id, Date.now(), pendingUrl)
+    createTabRef.id = id
     handleNavigation(pendingUrl, id)
   })
 }
