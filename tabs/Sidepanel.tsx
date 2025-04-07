@@ -34,7 +34,7 @@ const Sidepanel: React.FC<SidepanelProps> = (props) => {
     StorageKeys.RULES,
     {}
   )
-  console.log("rules: ", rules)
+  // console.log("rules: ", rules)
 
   // React.useEffect(() => {
   //   setRules({})

@@ -27,7 +27,7 @@ const menuList: MenuItem[] = [
     contexts: ["action"],
     action() {
       chrome.tabs.create({
-        url: "https://github.com/Dolov/chrome-easy-bookmark/issues"
+        url: "https://github.com/Dolov/chrome-QuickGo/issues"
       })
     }
   },
@@ -111,26 +111,16 @@ function setupNavigationListeners() {
     }
   }
 
-  // 刷新页面时 onBeforeNavigate > onCommitted，onBeforeNavigate 无需等待 TTFB
-  // 新建标签页时 onCreated > onUpdated > onBeforeNavigate，onCreated 无需等待 TTFB
+  // 刷新页面时 onBeforeNavigate > onCommitted, onBeforeNavigate 无需等待 TTFB
+  // 在终端中点击链接打开时 onCreated > (onBeforeNavigate === onUpdated), onCreated 无需等待 TTFB
+  // 点击 a 标签打开新标签页 onCreated(无 url) > onBeforeNavigate > onUpdated, onCreated、onBeforeNavigate 都无需等待 TTFB
 
   // chrome.webNavigation.onCommitted.addListener((details) => {
   //   if (details.transitionType === "reload") {
-  //     console.log("legacy:onCommitted: ", Date.now())
+  //     console.log("legacy:onCommitted: ", Date.now(), details.url)
   //     handleNavigation(details.url, details.tabId)
   //   }
   // })
-
-  // chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  //   if (changeInfo.status === "loading" && changeInfo.url) {
-  //     console.log("legacy:onUpdated: ", Date.now())
-  //     handleNavigation(changeInfo.url, tabId)
-  //   }
-  // })
-
-  const createTabRef = {
-    id: null
-  }
 
   const ignoreUrls = [
     "about:blank",
@@ -144,16 +134,18 @@ function setupNavigationListeners() {
     "chrome://new-tab-page/"
   ]
 
+  // 302 后会触发 onUpdated 不会触发 onBeforeNavigate
+  chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    const { status, url } = changeInfo
+    if (status === "loading" && url && !ignoreUrls.includes(url)) {
+      handleNavigation(changeInfo.url, tabId)
+    }
+  })
+
   chrome.webNavigation.onBeforeNavigate.addListener((details) => {
     const { url, tabId } = details
     if (!url) return
     if (ignoreUrls.includes(url)) return
-
-    if (createTabRef.id === tabId) {
-      createTabRef.id = null
-      return
-    }
-    console.log("onBeforeNavigate: ", tabId, Date.now(), url)
     handleNavigation(url, tabId)
   })
 
@@ -161,8 +153,6 @@ function setupNavigationListeners() {
     const { id, pendingUrl } = tab
     if (!pendingUrl) return
     if (ignoreUrls.includes(pendingUrl)) return
-    console.log("onCreated: ", id, Date.now(), pendingUrl)
-    createTabRef.id = id
     handleNavigation(pendingUrl, id)
   })
 }

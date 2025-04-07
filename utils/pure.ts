@@ -41,8 +41,15 @@ const defaultRuleMap: Record<string, BaseRuleProps> = {
     matchUrl: "link.juejin.cn",
     redirect: "target"
   },
-  // https://www.jianshu.com/go-wild?ac=2&url=https%3A%2F%2Fwww.runoob.com%2Fjs%2Fjs-intro.html
+  // https://links.jianshu.com/go?to=https%3A%2F%2Fdbarobin.com%2F2017%2F01%2F24%2Fgithub-acceleration-best-practices%2F
   jianshu: {
+    title: "简书 - 创作你的创作",
+    homePage: "https://www.jianshu.com/",
+    matchUrl: "links.jianshu.com/go",
+    redirect: "to"
+  },
+  // https://www.jianshu.com/go-wild?ac=2&url=https%3A%2F%2Fwww.runoob.com%2Fjs%2Fjs-intro.html
+  jianshu2: {
     title: "简书 - 创作你的创作",
     homePage: "https://www.jianshu.com/",
     matchUrl: "jianshu.com/go-wild",
