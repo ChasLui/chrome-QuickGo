@@ -62,3 +62,5 @@
 4️⃣ **打包扩展**：`npm package`
 
 💡 快速上手，贡献你的想法，让 QuickGo 变得更强大！🎯
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Dolov/chrome-QuickGo&type=Date)](https://star-history.com/#Dolov/chrome-QuickGo&Date)
