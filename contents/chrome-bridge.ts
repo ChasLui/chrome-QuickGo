@@ -15,10 +15,12 @@ const storage = new Storage()
 window.addEventListener("message", (event) => {
   if (event.source !== window) return // 避免处理其他来源的消息
   const { type, data } = event.data
+  if (!type) return
   if (type === "QuickGo::GET_RULES_FROM_INJECTED_SCRIPT") {
     storage.get<Record<string, RuleProps>>(StorageKeys.RULES).then((data) => {
+      const newData = data || {}
       window.postMessage(
-        { type: "QuickGo::GET_RULES_FROM_CONTENT_SCRIPT", data },
+        { type: "QuickGo::GET_RULES_FROM_CONTENT_SCRIPT", data: newData },
         "*"
       )
     })

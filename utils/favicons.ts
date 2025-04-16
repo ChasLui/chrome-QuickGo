@@ -43,6 +43,7 @@ import tencent from "data-base64:~assets/tencent.svg"
 import tianyancha from "data-base64:~assets/tianyancha.svg"
 import uisdc from "data-base64:~assets/uisdc.svg"
 import weibo from "data-base64:~assets/weibo.svg"
+import weixin110 from "data-base64:~assets/weixin110.svg"
 import youtube from "data-base64:~assets/youtube.svg"
 import yunpanziyuan from "data-base64:~assets/yunpanziyuan.svg"
 import yuque from "data-base64:~assets/yuque.svg"
@@ -97,5 +98,6 @@ export const domainFaviconMap = {
   "nowcoder.com": nowcoder,
   "nodeseek.com": nodeseek,
   "baike.com": baike,
-  "acgrip.com": acgrip
+  "acgrip.com": acgrip,
+  "weixin110.qq.com": weixin110
 }

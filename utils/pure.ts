@@ -438,6 +438,22 @@ const defaultRuleMap: Record<string, BaseRuleProps> = {
         ""
       )
     }
+  },
+  weixin110: {
+    title: "微信安全中心 - 安全连接一切",
+    homePage: "https://weixin110.qq.com/",
+    hostIcon: true,
+    matchUrl:
+      "weixin110.qq.com/cgi-bin/mmspamsupport-bin/newredirectconfirmcgi",
+    runAtContent: true,
+    redirect(updateLog) {
+      updateLog()
+      const element: HTMLParagraphElement = document.querySelector(
+        "body > div > div.weui-msg__text-area > div > div > div:nth-child(1) > p"
+      )
+      if (!element) return
+      window.location.href = element.innerText
+    }
   }
 }
 
