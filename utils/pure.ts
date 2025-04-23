@@ -362,7 +362,7 @@ const defaultRuleMap: Record<string, BaseRuleProps> = {
     title: "微博",
     homePage: "https://weibo.cn/",
     matchUrl: "weibo.cn/sinaurl",
-    redirect: ["toasturl", "url"]
+    redirect: ["toasturl", "url", "u"]
   },
   // https://blzxteam.com/gowild.htm?url=https_3A_2F_2Fjq_2eqq_2ecom_2F_3F_5fwv_3D1027_26k_3D1ywspCt0&u=31468&fr=https_3A_2F_2Fblzxteam_2ecom_2Fthread_2d479_2ehtm
   blzxteam: {
@@ -579,7 +579,7 @@ export const getDocumentTitle = async (): Promise<string> => {
           if (results && results[0]?.result) {
             resolve(results[0].result)
           } else {
-            reject(new Error("Failed to get document title"))
+            resolve("")
           }
         }
       )
