@@ -30,6 +30,7 @@ import leetcode from "data-base64:~assets/leetcode.svg"
 import linkedin from "data-base64:~assets/linkedin.svg"
 import logonews from "data-base64:~assets/logonews.svg"
 import mailqq from "data-base64:~assets/mailqq.svg"
+import mpweixin from "data-base64:~assets/mpweixin.svg"
 import nodeseek from "data-base64:~assets/nodeseek.svg"
 import nowcoder from "data-base64:~assets/nowcoder.svg"
 import oschina from "data-base64:~assets/oschina.svg"
@@ -99,5 +100,6 @@ export const domainFaviconMap = {
   "nodeseek.com": nodeseek,
   "baike.com": baike,
   "acgrip.com": acgrip,
-  "weixin110.qq.com": weixin110
+  "weixin110.qq.com": weixin110,
+  "mp.weixin.qq.com": mpweixin
 }

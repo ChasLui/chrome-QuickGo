@@ -454,6 +454,30 @@ const defaultRuleMap: Record<string, BaseRuleProps> = {
       if (!element) return
       window.location.href = element.innerText
     }
+  },
+  mpweixinqq: {
+    title: "微信公众号",
+    hostIcon: true,
+    homePage: "https://mp.weixin.qq.com",
+    matchUrl: "mp.weixin.qq.com/s/(*)",
+    runAtContent: true,
+    redirect(updateLog) {
+      const elements = document.querySelectorAll<HTMLAnchorElement>(
+        "#js_content > section a[data-linktype='2']"
+      )
+      if (!elements.length) return
+
+      elements.forEach((elem) => {
+        const cloned = elem.cloneNode(true) as HTMLAnchorElement
+        cloned.setAttribute("data-s-source", "quickgo")
+        cloned.addEventListener("click", (event) => {
+          updateLog()
+          window.open(cloned.href, "_blank")
+        })
+
+        elem.replaceWith(cloned)
+      })
+    }
   }
 }
 
