@@ -13,11 +13,15 @@
 </div>
 
 <div align="center">
-
-[chrome web store](https://chromewebstore.google.com/detail/quickgo/homllehcipjgpbpepcojhgcpfdopjhml) QuickGo 外链直达 — 无感知自动跳过知乎、简书、掘金、CSDN、少数派、Gitee 等 50+ 网站的安全中心跳转限制。
-
-[English](https://github.com/Dolov/chrome-QuickGo/blob/main/README.en-US.md) | 简体中文
-
+  <a href="https://chromewebstore.google.com/detail/quickgo/homllehcipjgpbpepcojhgcpfdopjhml" target="_blank">
+    <img src="https://www.google.com/chrome/static/images/favicons/favicon-32x32.png" width="16" /> Chrome 商店安装
+  </a>
+  <a href="https://microsoftedge.microsoft.com/addons/detail/quickgo-%E5%A4%96%E9%93%BE%E7%9B%B4%E8%BE%BE%E5%8A%A9%E6%89%8B/dakaakdfkfehocanmhaompabfdkmilai" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Microsoft_Edge_logo_%282019%29.svg/32px-Microsoft_Edge_logo_%282019%29.svg.png" width="16" /> Edge 商店安装
+  </a>
+  <p>QuickGo 外链直达 — 无感知自动跳过知乎、简书、掘金、CSDN、少数派、Gitee 等 50+ 网站的安全中心跳转限制。</p>
+  
+  [English](https://github.com/Dolov/chrome-QuickGo/blob/main/README.en-US.md) | 简体中文
 </div>
 
 ### 🚀 功能亮点
