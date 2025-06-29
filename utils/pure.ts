@@ -24,6 +24,8 @@ export interface BaseRuleProps {
   updateAt?: number
   // 主页
   homePage?: string
+  // 格式化函数
+  formatter?: (url: string) => string
 }
 
 const defaultRuleMap: Record<string, BaseRuleProps> = {
@@ -478,6 +480,13 @@ const defaultRuleMap: Record<string, BaseRuleProps> = {
         elem.replaceWith(cloned)
       })
     }
+  },
+  down423: {
+    title: "423down - 免费资源分享平台",
+    homePage: "https://423down.com/",
+    matchUrl: "423down.com/go.php",
+    redirect: "url",
+    formatter: atobPolyfill
   }
 }
 
@@ -609,4 +618,38 @@ export const getDocumentTitle = async (): Promise<string> => {
       )
     })
   })
+}
+
+export function atobPolyfill(input) {
+  if (typeof window !== "undefined" && window.atob) {
+    return window.atob(input)
+  }
+
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+
+  let str = input.replace(/=+$/, "")
+  if (str.length % 4 === 1) {
+    throw new Error(
+      '"atob" failed: The string to be decoded is not correctly encoded.'
+    )
+  }
+
+  let output = ""
+  let bc = 0,
+    bs,
+    buffer,
+    idx = 0
+
+  while ((buffer = str.charAt(idx++))) {
+    buffer = chars.indexOf(buffer)
+    if (buffer === -1) continue
+
+    bs = bc % 4 ? bs * 64 + buffer : buffer
+    if (bc++ % 4) {
+      output += String.fromCharCode(255 & (bs >> ((-2 * bc) & 6)))
+    }
+  }
+
+  return output
 }

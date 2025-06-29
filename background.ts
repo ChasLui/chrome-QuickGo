@@ -86,29 +86,33 @@ function setupNavigationListeners() {
       ? item.redirect
       : [item.redirect]
 
-    const redirectUrl = redirectKeys
+    let redirectUrl = redirectKeys
       .map((key) => searchParams.get(key))
       .find(Boolean)
 
     if (!redirectUrl) return
 
-    const decodeUrl = decodeURIComponent(redirectUrl)
-    if (decodeUrl.includes("://")) {
-      ga(GaEvents.REDIRECT)
-
-      const { id, count } = item
-      const newData = {
-        ...data,
-        [id]: {
-          ...data[id],
-          count: (count || 0) + 1,
-          updateAt: Date.now()
-        }
-      }
-
-      chrome.tabs.update(tabId, { url: decodeUrl })
-      storage.set(StorageKeys.RULES, newData)
+    if (item.formatter) {
+      redirectUrl = item.formatter(redirectUrl)
     }
+
+    const decodeUrl = decodeURIComponent(redirectUrl)
+    if (!decodeUrl.includes("://")) return
+
+    ga(GaEvents.REDIRECT)
+
+    const { id, count } = item
+    const newData = {
+      ...data,
+      [id]: {
+        ...data[id],
+        count: (count || 0) + 1,
+        updateAt: Date.now()
+      }
+    }
+
+    chrome.tabs.update(tabId, { url: decodeUrl })
+    storage.set(StorageKeys.RULES, newData)
   }
 
   // 刷新页面时 onBeforeNavigate > onCommitted, onBeforeNavigate 无需等待 TTFB

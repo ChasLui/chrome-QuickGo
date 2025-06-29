@@ -1,5 +1,6 @@
 import cto51 from "data-base64:~assets/51cto.svg"
 import doc360 from "data-base64:~assets/360doc.svg"
+import down423 from "data-base64:~assets/423down.svg"
 import acgrip from "data-base64:~assets/acgrip.svg"
 import afdian from "data-base64:~assets/afdian.svg"
 import aliyun from "data-base64:~assets/aliyun.svg"
@@ -101,5 +102,6 @@ export const domainFaviconMap = {
   "baike.com": baike,
   "acgrip.com": acgrip,
   "weixin110.qq.com": weixin110,
-  "mp.weixin.qq.com": mpweixin
+  "mp.weixin.qq.com": mpweixin,
+  "423down.com": down423
 }
